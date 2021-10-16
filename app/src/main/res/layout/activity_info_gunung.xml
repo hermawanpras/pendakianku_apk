@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".InfoGunungActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informasi Pendakian \n Gunung Panderman-Buthak"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/open_sans_bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Pos Pendakian Gunung Panderman-Buthak"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/pos_pendakian"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Pos pendakian Gunung Panderman-Buthak terletak di Dukuh Toyomerto, Desa Pesanggarahan, Kota Batu.
+Pos pendakian ini mengelola dua jalur pendakian, yaitu jalur pendakian Gunung Panderman dan jalur pendakian Gunung Buthak. Tiket masuk jalur pendakian keduanya sama, yaitu Rp 15.000,- per orang dan untuk biaya parkir motor Rp 10.000,- per motor.
+Peraturan untuk pendaki yang memakai motor matic diharuskan untuk parkir di bawah sebelum Pos Pendakian karena dikhawatirkan kendaraan pendakian tidak kuat dan menyebabkan kecelakaan. Pendaki dapat menggunakan ojek warga lokal dari parkir di bawah Pos Pendakian menuju Pos Pendakian (Basecamp) maupun sebaliknya, dengan ongkos ojek Rp 15.000 sekali jalan."/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="1. Gunung Panderman"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/peta_panderman"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Gunung Panderman memiliki ketinggian 2.045 mdpl.
+Pendaki dilarang memberi makan kera, karena dapat menyebabkan ketergantungan kera kepada manusia untuk mendapatkan makanan dan membuat perilakunya menjadi lebih buas.
+Sumber air terletak tepat setelah pos pendakian, karena masih di area perkebunan warga.
+Tempat untuk buka tenda (area camp) terdapat di Pos 1 Latar Ombo, Pos 2 Watu Gede, dan Puncak Basundara. Estimasi pendakian Gunung Panderman :\n
+> Basecamp - Pos 1 Latar Ombo : 45 menit \n
+> Pos 1 Latar Ombo - Pos 2 Watu Gede : 1 jam \n
+> Pos 2 Watu Gede - Pos 3 Puncak Bayangan : 35 menit \n
+> Pos 3 Puncak Bayangan - Puncak Basundara : 15 menit"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="2. Gunung Buthak"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Gunung Panderman memiliki ketinggian 2.868 mdpl yang terdiri dari empat pos pendakian.
+Sumber air terdapat di Pos 1 dan Pos 4 Sabana.
+Pendaki dapat mendirikan tenda di setiap pos, kecuali di Puncak Buthak. Pendaki juga masih dapat menemukan warung yang dikelola warga lokal di Pos 1. Estimasi pendakian Gunung Buthak :\n
+> Basecamp - Pos 1 : 1 jam 15 menit \n
+> Pos 1 - Pos 2 : 1 jam 20 menit \n
+> Pos 2 - Pos 3 : 1 jam 15 menit \n
+> Pos 3 - Pos 4 Sabana : 1 jam 30 menit \n
+> Pos 4 Sabana - Puncak Buthak : 1 jam"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="3. Peraturan Pendakian di Gunung Panderman-Buthak"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/pos_pendakian"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Dalam mendaki Gunung Panderman-Buthak, pendaki harus mematuhi peraturan yang telah ditetapkan oleh pihak pengelola pendakian. \n
+Peraturan Pendakian:
+1. Pendaki dilarang membuang sampah sembarang. Sampah harus dibawa turun kembali. \n
+2. Pendaki dilarang menggunakan jalur pendakian ilegal. \n
+3. Pendaki dilarang melakukan hal asusila selama pendakian. \n
+4. Pendaki dilarang memetik dan membawa turun bunga edelweis. \n
+Jika pendaki melanggar peraturan yang ada, maka pendaki akan dilakukan blacklist (larangan mendaki) di kawasan Gunung Panderman-Buthak."/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

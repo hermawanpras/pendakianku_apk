@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".PeralatanActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peralatan Pendakian"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/open_sans_bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="14dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Tenda"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/tenda"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Tenda berguna sebagai tempat berlindung dan beristirahat dengan nyaman tanpa perlu memikirkan apa yang terjadi di luar dan melindungi pendaki dari dinginnya suhu di gunung.
+Mendaki gunung hanya dengan sleeping bag saja sangat tidak dianjurkan karena di gunung cuaca dapat berubah kapanpun, dapat terjadi badai juga. Ada banyak ukuran, bentuk, dan jenis tenda yang beredar di pasaran.
+Pendaki dapat memilih tenda yang berjenis dome. Dimana tenda dome berbentuk kuba dan mampu menahan angin. Selain itu, pastikan pula tenda yang dibawa sesuai kapasitas dari kelompok pendakimu."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Bahan dan Peralatan Masak "
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/alat_masak"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Dalam pendakian, peralatan masak yang wajib dibawa yaitu kompor, cooking set, pisau, dan peralatan makan seperti sendok.
+Peralatan ini sengaja dibuat kecil dan portabel agar mudah dibawa ke mana-mana, termasuk untuk mendaki.
+Selama mendaki, tubuh membutuhkan asupan gizi yang tepat sebagai penambah stamina dan merupakan salah satu langkah terbaik untuk menghindari serangan hipotermia yang biasanya terjadi secara tiba-tiba.
+Oleh karenanya, pendaki wajib membawa bahan makanan dan camilan sehat untuk menghindari rasa lapar dan haus ketika mendaki gunung.
+"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Matras"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/matras"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Matras diperlukan dalam pendakian sebagai alas pada permukaan tanah.
+    Matras berfungsi untuk menghindarkan hawa dingin dan permukaan yang tidak mulus dari tanah."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. Tas Gunung/Carrier"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/carrier"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Tas gunung atau biasa disebut carrier juga menjadi peralatan penunjang saat mendaki gunung.
+Tas carrier memegang peranan penting sebab fungsinya sebagai media penyimpanan barang-barang yang akan dibawa.
+Pilihlah tas gunung yang memiliki kapasitas besar dan sesuai dengan bentuk tubuh manusia, khususnya pada bagian punggung.
+Pasalnya, bila membawa alat-alat naik gunung dalam bentuk kecil, dapat dipastikan akan merasakan pegal dan sakit pada bagian belakang tubuh karena terlalu banyak membawa alat-alat naik gunung dalam waktu lama.
+"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. Sepatu Gunung"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/sepatu_gunung"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Fungsi paling dasar sepasang sepatu adalah untuk melindungi kaki dari segala hal yang berpotensi merusak, melukai, melumpuhkan, ketika bersentuhan dan berjalan di berbagai medan.
+Tapi karena permukaan medan pegunungan cenderung lebih sukar dibandingkan jalanan perkotaan yang dilalui sehari-hari, maka sepatu yang dipakai tidak bisa sembarangan.
+Sepatu Gunung yang punya alas empuk, waterproof, grip tebal dan anti slip merupakan modal yang ideal untuk menjajal medan pendakian."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6. Jaket Outdoor"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/jaket"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Jaket sangat diperlukan saat suhu udara di kawasan gunung tiba-tiba saja mengalami penurunan.
+Selain hangat, jaket pun bisa kamu gunakan untuk melindungi tubuh dari sengatan sinar matahari saat mendaki.
+Bila suhu di gunung tergolong normal, maksudnya tidak panas ataupun dingin, sebaiknya lepaskan jaket, sebab suhu tubuh manusia ketika berjalan justru meningkat dan hanya akan membuat tidak nyaman ketika menggunakannya."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7. Jas Hujan"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/jas_hujan"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Perubahan cuaca yang terjadi saat tiba-tiba, membuat para pendaki wajib memasukkan jas hujan sebagai alat-alat naik gunung.
+Apabila tidak memilikinya, besar kemungkinan keinginanmu untuk mendaki hingga puncak gunung tidak akan terealisasikan.
+Umumnya, pendaki bisa menggunakan jas hujan yang khusus untuk pendaki gunung. Namun bila harganya terasa mahal, jas hujan sehari-hari yang terbuat dari bahan plastik pun dapat gunakan.
+Sebaiknya bawa dua jenis jas hujan, yaitu jas hujan egois dan jas hujan kelelawar. Jas hujan egois digunakan untuk melindungi tubuh, sedangkan jas hujan kelelawar untuk melindungi tas gunungmu dari air hujan.
+"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="8. Sleeping Bag"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/sleeping_bag"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Sleeping bag pun perlu dibawa ketika mendaki. Pasalnya, peralatan naik gunung yang satu ini digunakan untuk tidur dan menghindari pendaki dari serangan hipotermia.
+Pendaki bisa membeli alat-alat naik gunung ini yang terbuat dari campuran bahan polar dan dacron untuk memberikan kehangatan.
+Selain itu, pilihlah sleeping bag yang memiliki penutup kepala dan bentuk sesuai dengan tinggi badanmu agar seluruh badan tertutup dengan sempurna."/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="9. Alat penerangan"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/headlamp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Ketika malam hari tiba, tentunya tidak ada penerangan sama sekali di gunung.
+Maka jangan lupa untuk membawa alat penerangan, seperti lampu tenda, senter, dan headlamp."/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10. Trekking Pole"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/trekking_pole"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Salah satu barang yang tidak boleh di tinggalkan selanjutnya adalah tongkat atau Trekking Pole.
+Jika tidak membawa alat yang satu ini, pendaki akan sulit menyeimbangkan tubuh ketika mendaki, apalagi jika di sisi jalur pendakiannya tidak ada pegangan."/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11. Peralatan Medis/P3K"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:textColor="@color/black"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:src="@drawable/p3k"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/black"
+                android:text="Alat-alat naik gunung lainnya yang wajib dibawa adalah peralatan medis. Perubahan cuaca yang terjadi secara tiba-tiba saat mendaki, kemungkinan bisa mempengaruhi tubuhmu.
+Oleh sebab itu, bila tubuh sudah terasa tidak enak, segeralah ambil peralatan medis dan konsumsi obat-obat antibiotik.
+Pasalnya memaksakan tubuh yang kurang prima saat mendaki gunung, justru berisiko mendatangkan berbagai penyakit yang dapat merenggut nyawa, salah satunya hipotermia.
+Siapkan obat-obatan untuk mengatasi keadaan pusing, demam, masuk angin, dan lainnya seperti obat paracetamol, tolak angin. Selain obat-obatan, kamu juga bisa membawa deker elastis, bidai, dan perban sebagai bentuk antisipasi bila sewaktu-waktu terjadi kecelakaan yang tidak diinginkan, seperti patah tulang atau terkilir. Serta bawalah matras alumunium foil guna menjaga panas tubuh dan memulihkan diri dari kondisi hipotermia.
+"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
