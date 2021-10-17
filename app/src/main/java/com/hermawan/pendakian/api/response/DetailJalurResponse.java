@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class InfoJalurResponse extends BaseResponse {
+public class DetailJalurResponse extends BaseResponse {
     @SerializedName("data")
-    public List<InfoJalurResponse.InfoJalurModel> data;
+    public List<DetailJalurModel> data;
 
-    public static class InfoJalurModel {
+    public static class DetailJalurModel {
         @SerializedName("id_info_jalur")
         public String idInfoGunung;
 
