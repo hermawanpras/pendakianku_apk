@@ -34,7 +34,12 @@ public class SignInActivity extends AppCompatActivity {
         Button signIn = findViewById(R.id.signIn);
 
         if (AppPreference.getUser(this) != null) {
-            startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
+            if (AppPreference.getUser(this).roleUser.equals("admin")) {
+                startActivity(new Intent(SignInActivity.this, AdminMainMenuActivity.class));
+            } else {
+                startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
+            }
+
         }
 
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +54,17 @@ public class SignInActivity extends AppCompatActivity {
                         if (response != null) {
                             if (response.body().status) {
                                 AppPreference.saveUser(SignInActivity.this, response.body().data.get(0));
-                                startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
-                                Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                                finish();
-                                //Toast.makeText(SignInActivity.this, "Sukses login", Toast.LENGTH_SHORT).show();
+
+                                if (response.body().data.get(0).roleUser.equals("admin")) {
+                                    startActivity(new Intent(SignInActivity.this, AdminMainMenuActivity.class));
+                                    Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                    finish();
+                                } else {
+                                    startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
+                                    Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+
                             } else {
                                 startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                             }

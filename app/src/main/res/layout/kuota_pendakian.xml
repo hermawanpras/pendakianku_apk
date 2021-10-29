@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/statusChip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="@color/black"
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:id="@+id/tgl_pendakian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|center"
-        android:layout_margin="5dp"
+        android:layout_weight="1"
         android:text="Tanggal Pendakian"
         android:fontFamily="@font/open_sans_regular"/>
 
@@ -22,4 +30,4 @@
         android:text="Kuota"
         android:fontFamily="@font/open_sans_regular"/>
 
-</FrameLayout>
+</LinearLayout>

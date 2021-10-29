@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hermawan.pendakian">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -19,7 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AdminProfileActivity"></activity>
+        <activity android:name=".TambahAnggotaDetailActivity"></activity>
+        <activity android:name=".DetailPendakianActivity" />
+        <activity android:name=".TambahAnggotaActivity" />
+        <activity android:name=".JadwalLengkapActivity" />
+        <activity android:name=".CekScanActivity" />
+        <activity android:name=".CekPembayaranActivity" />
+        <activity android:name=".CekPendaftaranActivity" />
+        <activity android:name=".TambahDetailJalurActivity" />
+        <activity android:name=".AdminProfileActivity" />
         <activity android:name=".AdminLaporanActivity" />
         <activity android:name=".AdminCekActivity" />
         <activity android:name=".AdminHomeActivity" />

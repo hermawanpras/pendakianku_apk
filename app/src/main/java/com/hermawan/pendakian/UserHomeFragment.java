@@ -21,6 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.hermawan.pendakian.api.response.DetailJalurResponse;
 import com.hermawan.pendakian.retrofit.IOpenWeatherMap;
 import com.hermawan.pendakian.retrofit.RetrofitClient;
 import com.hermawan.pendakian.adapter.WeatherForecastAdapter;
@@ -36,7 +37,10 @@ import com.hermawan.pendakian.model.WeatherForecastResult;
 import com.hermawan.pendakian.model.WeatherResult;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -89,12 +93,10 @@ public class UserHomeFragment extends Fragment {
         TextView panderman = view.findViewById(R.id.panderman);
         TextView status_jlr = view.findViewById(R.id.status_jlr);
         TextView tgl_mulai = view.findViewById(R.id.tgl_mulai_jlr);
-        TextView tgl_selesai = view.findViewById(R.id.tgl_selesai_jlr);
         TextView ket = view.findViewById(R.id.ket);
         TextView buthak = view.findViewById(R.id.buthak);
         TextView status_jlr1 = view.findViewById(R.id.status_jlr1);
         TextView tgl_mulai1 = view.findViewById(R.id.tgl_mulai_jlr1);
-        TextView tgl_selesai1 = view.findViewById(R.id.tgl_selesai_jlr1);
         TextView ket1 = view.findViewById(R.id.ket1);
         LinearLayout booking = view.findViewById(R.id.booking);
         LinearLayout booking1 = view.findViewById(R.id.booking1);
@@ -145,44 +147,30 @@ public class UserHomeFragment extends Fragment {
         getCurrentForecast();
         getDailyForecast();
 
-        apiInterface.infojalur().enqueue(new Callback<InfoJalurResponse>() {
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String tanggal = sdf.format(c.getTime());
+
+        apiInterface.getTanggal("1", tanggal).enqueue(new Callback<DetailJalurResponse>() {
             @Override
-            public void onResponse(Call<InfoJalurResponse> call, Response<InfoJalurResponse> response) {
+            public void onResponse(Call<DetailJalurResponse> call, Response<DetailJalurResponse> response) {
                 if (response.body().status) {
-                    InfoJalurResponse.InfoJalurModel panderman = response.body().data.get(0);
-                    InfoJalurResponse.InfoJalurModel buthak = response.body().data.get(1);
-                    status_jlr.setText(panderman.statusJalur);
-                    tgl_mulai.setText(panderman.tglMulaiJalur);
-                    tgl_selesai.setText(panderman.tglSelesaiJalur);
-                    ket.setText(panderman.ketJalur);
+                    DetailJalurResponse.DetailJalurModel panderman = response.body().data.get(0);
+                    status_jlr.setText(panderman.getStatus());
+                    tgl_mulai.setText(panderman.getTanggalJalur());
+                    ket.setText(panderman.getKeterangan());
 
-                    status_jlr1.setText(buthak.statusJalur);
-                    tgl_mulai1.setText(buthak.tglMulaiJalur);
-                    tgl_selesai1.setText(buthak.tglSelesaiJalur);
-                    ket1.setText(buthak.ketJalur);
-
-                    if (panderman.statusJalur.equalsIgnoreCase("Tutup")){
+                    if (panderman.getStatus().equalsIgnoreCase("tutup")){
                         booking.setVisibility(View.GONE);
 
-                    }
-                    if (buthak.statusJalur.equalsIgnoreCase("Tutup")){
-                        booking1.setVisibility(View.GONE);
                     }
 
                     booking.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(v.getContext(),UserBookingActivity.class);
-                            intent.putExtra("ID_JALUR", panderman.idInfoGunung);
-                            startActivity(intent);
-                        }
-                    });
-
-                    booking1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(),UserBookingActivity.class);
-                            intent.putExtra("ID_JALUR", buthak.idInfoGunung);
+                            intent.putExtra("ID_INFO_JALUR", panderman.getIdInfoJalur());
                             startActivity(intent);
                         }
                     });
@@ -191,7 +179,39 @@ public class UserHomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<InfoJalurResponse> call, Throwable t) {
+            public void onFailure(Call<DetailJalurResponse> call, Throwable t) {
+
+            }
+        });
+
+        apiInterface.getTanggal("2", tanggal).enqueue(new Callback<DetailJalurResponse>() {
+            @Override
+            public void onResponse(Call<DetailJalurResponse> call, Response<DetailJalurResponse> response) {
+                if (response.body().status) {
+                    DetailJalurResponse.DetailJalurModel buthak = response.body().data.get(0);
+
+                    status_jlr1.setText(buthak.getStatus());
+                    tgl_mulai1.setText(buthak.getTanggalJalur());
+                    ket1.setText(buthak.getKeterangan());
+
+                    if (buthak.getStatus().equalsIgnoreCase("tutup")){
+                        booking1.setVisibility(View.GONE);
+                    }
+
+                    booking1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(v.getContext(), UserBookingActivity.class);
+                            intent.putExtra("ID_INFO_JALUR", buthak.getIdInfoJalur());
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailJalurResponse> call, Throwable t) {
 
             }
         });

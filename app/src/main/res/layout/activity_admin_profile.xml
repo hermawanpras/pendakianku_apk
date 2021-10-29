@@ -37,14 +37,14 @@
                     android:layout_marginRight="13dp"
                     android:layout_gravity="center"
                     android:orientation="vertical">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shapeableImageViewProfil"
+
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="75dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
-                        android:scaleType="centerCrop"
-                        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
+                        android:id="@+id/fotoIv"
                         android:src="@drawable/ic_person_black_24dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -152,4 +152,5 @@
         android:fontFamily="@font/open_sans_semi_bold"
         android:textAllCaps="false"
         android:text="Keluar"/>
+
 </LinearLayout>
