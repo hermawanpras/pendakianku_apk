@@ -3,20 +3,41 @@ package com.hermawan.pendakian;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.TitikJalurResponse;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.mapbox.android.core.location.LocationEngine;
+import com.mapbox.android.core.location.LocationEngineCallback;
+import com.mapbox.android.core.location.LocationEngineProvider;
+import com.mapbox.android.core.location.LocationEngineRequest;
+import com.mapbox.android.core.location.LocationEngineResult;
+import com.mapbox.android.core.permissions.PermissionsListener;
+import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -27,6 +48,7 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +60,15 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
-public class TrackingActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class TrackingActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
+
+    private static final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
+    private static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
+    private MapboxMap mapboxMap;
+    private PermissionsManager permissionsManager;
+    private LocationEngine locationEngine;
+    private final LocationChangeListeningActivityLocationCallback callback =
+            new LocationChangeListeningActivityLocationCallback(this);
 
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
@@ -46,7 +76,7 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
     private MapView mapView;
     private ApiInterface apiInterface;
 
-    private List<Point> routeCoordinates;
+    private String idGunung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +84,9 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
 
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_tracking);
+
+        idGunung = getIntent().getStringExtra("ID_GUNUNG");
+
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -63,16 +96,30 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
-        List<Feature> symbolLayerIconFeatureList = new ArrayList<>();
-        symbolLayerIconFeatureList.add(Feature.fromGeometry(
-                Point.fromLngLat(-118.39439114221236, 33.397676454651766)));
-        symbolLayerIconFeatureList.add(Feature.fromGeometry(
-                Point.fromLngLat(-54.14164, -33.981818)));
-        symbolLayerIconFeatureList.add(Feature.fromGeometry(
-                Point.fromLngLat(-56.990533, -30.583266)));
+        this.mapboxMap = mapboxMap;
+
+        if (idGunung.equals("2")) {
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(-7.9553154, 112.46511727))
+                    .title("Puncak Buthak"));
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(-7.95014415, 112.46827656))
+                    .title("Pos 4 (Sabana)"));
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(-7.92863514, 112.48041008))
+                    .title("Pos 3"));
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(-7.90923188, 112.48057894))
+                    .title("Pos 2"));
+            mapboxMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(-7.90483845, 112.48865806))
+                    .title("Pos 1 (Sumber Air)"));
+        } else if (idGunung.equals("1")) {
+
+        }
 
         apiInterface.getTitikJalur(
-                "2"
+                idGunung
         ).enqueue(new Callback<TitikJalurResponse>() {
             @Override
             public void onResponse(Call<TitikJalurResponse> call, Response<TitikJalurResponse> response) {
@@ -85,13 +132,11 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
 
                     Log.e("data", String.valueOf(response.body().data.size()));
 
-                    mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/hermawanpras/ckutqwy3q3itq19o3bhca1nua")
+                    mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/hermawanpras/ckvdi12md194714qx5x6fxaem")
                             // Add the SymbolLayer icon image to the map style
                             .withImage(ICON_ID, BitmapFactory.decodeResource(
                                     TrackingActivity.this.getResources(), R.drawable.mapbox_marker_icon_default))
                             // Adding a GeoJson source for the SymbolLayer icons.
-                            .withSource(new GeoJsonSource(SOURCE_ID,
-                                    FeatureCollection.fromFeatures(symbolLayerIconFeatureList)))
                             .withLayer(new SymbolLayer(LAYER_ID, SOURCE_ID)
                                     .withProperties(
                                             iconImage(ICON_ID),
@@ -101,8 +146,7 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
                             ), new Style.OnStyleLoaded() {
                         @Override
                         public void onStyleLoaded(@NonNull Style style) {
-                            initRouteCoordinates(style);
-
+                            enableLocationComponent(style);
                             // Create the LineString from the list of coordinates and then make a GeoJSON
                             // FeatureCollection so we can add the line to our map as a layer.
                             style.addSource(new GeoJsonSource("line-source",
@@ -119,9 +163,7 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
                                     PropertyFactory.lineWidth(5f),
                                     PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
                             ));
-// Map is set up and the style has loaded. Now you can add additional data or make other map adjustments.
-
-
+                            // Map is set up and the style has loaded. Now you can add additional data or make other map adjustments.
                         }
                     });
                 }
@@ -175,85 +217,130 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
         mapView.onSaveInstanceState(outState);
     }
 
-    private void initRouteCoordinates(Style style) {
-// Create a list to store our line coordinates.
-        routeCoordinates = new ArrayList<>();
-        apiInterface.getTitikJalur(
-                "2"
-        ).enqueue(new Callback<TitikJalurResponse>() {
-            @Override
-            public void onResponse(Call<TitikJalurResponse> call, Response<TitikJalurResponse> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().status) {
-                        for (TitikJalurResponse.TitikJalurModel model : response.body().data) {
-                            routeCoordinates.add(Point.fromLngLat(Double.parseDouble(model.longitude), Double.parseDouble(model.latitude)));
-                        }
-                    }
+    /**
+     * Initialize the Maps SDK's LocationComponent
+     */
+    @SuppressWarnings( {"MissingPermission"})
+    private void enableLocationComponent(@NonNull Style loadedMapStyle) {
+        // Check if permissions are enabled and if not request
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
+
+            // Get an instance of the component
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
+
+            // Set the LocationComponent activation options
+            LocationComponentActivationOptions locationComponentActivationOptions =
+                    LocationComponentActivationOptions.builder(this, loadedMapStyle)
+                            .useDefaultLocationEngine(false)
+                            .build();
+
+            // Activate with the LocationComponentActivationOptions object
+            locationComponent.activateLocationComponent(locationComponentActivationOptions);
+
+            // Enable to make component visible
+            locationComponent.setLocationComponentEnabled(true);
+
+            // Set the component's camera mode
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+
+            // Set the component's render mode
+            locationComponent.setRenderMode(RenderMode.COMPASS);
+
+            initLocationEngine();
+        } else {
+            permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(this);
+        }
+    }
+
+    /**
+     * Set up the LocationEngine and the parameters for querying the device's location
+     */
+    @SuppressLint("MissingPermission")
+    private void initLocationEngine() {
+        locationEngine = LocationEngineProvider.getBestLocationEngine(this);
+
+        LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
+                .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
+                .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
+
+        locationEngine.requestLocationUpdates(request, callback, getMainLooper());
+        locationEngine.getLastLocation(callback);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) {
+//        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+        if (granted) {
+            mapboxMap.getStyle(new Style.OnStyleLoaded() {
+                @Override
+                public void onStyleLoaded(@NonNull Style style) {
+                    enableLocationComponent(style);
+                }
+            });
+        } else {
+            Toast.makeText(this, "Location Permission Not Granted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private static class LocationChangeListeningActivityLocationCallback
+            implements LocationEngineCallback<LocationEngineResult> {
+
+        private final WeakReference<TrackingActivity> activityWeakReference;
+
+        LocationChangeListeningActivityLocationCallback(TrackingActivity activity) {
+            this.activityWeakReference = new WeakReference<>(activity);
+        }
+
+        /**
+         * The LocationEngineCallback interface's method which fires when the device's location has changed.
+         *
+         * @param result the LocationEngineResult object which has the last known location within it.
+         */
+        @Override
+        public void onSuccess(LocationEngineResult result) {
+            TrackingActivity activity = activityWeakReference.get();
+
+            if (activity != null) {
+                Location location = result.getLastLocation();
+
+                if (location == null) {
+                    return;
+                }
+
+                // Create a Toast which displays the new location's coordinates
+//                Toast.makeText(activity, result.getLastLocation().getLatitude() + " | " + result.getLastLocation().getLongitude(), Toast.LENGTH_SHORT).show();
+
+                // Pass the new location to the Maps SDK's LocationComponent
+                if (activity.mapboxMap != null && result.getLastLocation() != null) {
+                    activity.mapboxMap.getLocationComponent().forceLocationUpdate(result.getLastLocation());
                 }
             }
+        }
 
-            @Override
-            public void onFailure(Call<TitikJalurResponse> call, Throwable t) {
-                Log.e("error", t.getMessage());
+        /**
+         * The LocationEngineCallback interface's method which fires when the device's location can't be captured
+         *
+         * @param exception the exception message
+         */
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+            TrackingActivity activity = activityWeakReference.get();
+            if (activity != null) {
+                Toast.makeText(activity, exception.getLocalizedMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
-        });
-//        routeCoordinates.add(Point.fromLngLat(-118.39439114221236, 33.397676454651766));
-//        routeCoordinates.add(Point.fromLngLat(-118.39421054012902, 33.39769799454838));
-//        routeCoordinates.add(Point.fromLngLat(-118.39408583869053, 33.39761901490136));
-//        routeCoordinates.add(Point.fromLngLat(-118.39388373635917, 33.397328225582285));
-//        routeCoordinates.add(Point.fromLngLat(-118.39372033447427, 33.39728514560042));
-//        routeCoordinates.add(Point.fromLngLat(-118.3930882271826, 33.39756875508861));
-//        routeCoordinates.add(Point.fromLngLat(-118.3928216241072, 33.39759029501192));
-//        routeCoordinates.add(Point.fromLngLat(-118.39227981785722, 33.397234885594564));
-//        routeCoordinates.add(Point.fromLngLat(-118.392021814881, 33.397005125197666));
-//        routeCoordinates.add(Point.fromLngLat(-118.39090810203379, 33.396814854409186));
-//        routeCoordinates.add(Point.fromLngLat(-118.39040499623022, 33.39696563506828));
-//        routeCoordinates.add(Point.fromLngLat(-118.39005669221234, 33.39703025527067));
-//        routeCoordinates.add(Point.fromLngLat(-118.38953208616074, 33.39691896489222));
-//        routeCoordinates.add(Point.fromLngLat(-118.38906338075398, 33.39695127501678));
-//        routeCoordinates.add(Point.fromLngLat(-118.38891287901787, 33.39686511465794));
-//        routeCoordinates.add(Point.fromLngLat(-118.38898167981154, 33.39671074380141));
-//        routeCoordinates.add(Point.fromLngLat(-118.38984598978178, 33.396064537239404));
-//        routeCoordinates.add(Point.fromLngLat(-118.38983738968255, 33.39582400356976));
-//        routeCoordinates.add(Point.fromLngLat(-118.38955358640874, 33.3955978295119));
-//        routeCoordinates.add(Point.fromLngLat(-118.389041880506, 33.39578092284221));
-//        routeCoordinates.add(Point.fromLngLat(-118.38872797688494, 33.3957916930261));
-//        routeCoordinates.add(Point.fromLngLat(-118.38817327048618, 33.39561218978703));
-//        routeCoordinates.add(Point.fromLngLat(-118.3872530598711, 33.3956265500598));
-//        routeCoordinates.add(Point.fromLngLat(-118.38653065153775, 33.39592811523983));
-//        routeCoordinates.add(Point.fromLngLat(-118.38638444985126, 33.39590657490452));
-//        routeCoordinates.add(Point.fromLngLat(-118.38638874990086, 33.395737842093304));
-//        routeCoordinates.add(Point.fromLngLat(-118.38723155962309, 33.395027006653244));
-//        routeCoordinates.add(Point.fromLngLat(-118.38734766096238, 33.394441819579285));
-//        routeCoordinates.add(Point.fromLngLat(-118.38785936686516, 33.39403972556368));
-//        routeCoordinates.add(Point.fromLngLat(-118.3880743693453, 33.393616088784825));
-//        routeCoordinates.add(Point.fromLngLat(-118.38791956755958, 33.39331092541894));
-//        routeCoordinates.add(Point.fromLngLat(-118.3874852625497, 33.39333964672257));
-//        routeCoordinates.add(Point.fromLngLat(-118.38686605540683, 33.39387816940854));
-//        routeCoordinates.add(Point.fromLngLat(-118.38607484627983, 33.39396792286514));
-//        routeCoordinates.add(Point.fromLngLat(-118.38519763616081, 33.39346171215717));
-//        routeCoordinates.add(Point.fromLngLat(-118.38523203655761, 33.393196040109466));
-//        routeCoordinates.add(Point.fromLngLat(-118.3849955338295, 33.393023711860515));
-//        routeCoordinates.add(Point.fromLngLat(-118.38355931726203, 33.39339708930139));
-//        routeCoordinates.add(Point.fromLngLat(-118.38323251349217, 33.39305243325907));
-//        routeCoordinates.add(Point.fromLngLat(-118.3832583137898, 33.39244928189641));
-//        routeCoordinates.add(Point.fromLngLat(-118.3848751324406, 33.39108499551671));
-//        routeCoordinates.add(Point.fromLngLat(-118.38522773650804, 33.38926830725471));
-//        routeCoordinates.add(Point.fromLngLat(-118.38508153482152, 33.38916777794189));
-//        routeCoordinates.add(Point.fromLngLat(-118.38390332123025, 33.39012280171983));
-//        routeCoordinates.add(Point.fromLngLat(-118.38318091289693, 33.38941192035707));
-//        routeCoordinates.add(Point.fromLngLat(-118.38271650753981, 33.3896129783018));
-//        routeCoordinates.add(Point.fromLngLat(-118.38275090793661, 33.38902416443619));
-//        routeCoordinates.add(Point.fromLngLat(-118.38226930238106, 33.3889451769069));
-//        routeCoordinates.add(Point.fromLngLat(-118.38258750605169, 33.388420985121336));
-//        routeCoordinates.add(Point.fromLngLat(-118.38177049662707, 33.388083490107284));
-//        routeCoordinates.add(Point.fromLngLat(-118.38080728551597, 33.38836353925403));
-//        routeCoordinates.add(Point.fromLngLat(-118.37928506795642, 33.38717870977523));
-//        routeCoordinates.add(Point.fromLngLat(-118.37898406448423, 33.3873079646849));
-//        routeCoordinates.add(Point.fromLngLat(-118.37935386875012, 33.38816247841951));
-//        routeCoordinates.add(Point.fromLngLat(-118.37794345248027, 33.387810620840135));
-//        routeCoordinates.add(Point.fromLngLat(-118.37546662390886, 33.38847843095069));
-//        routeCoordinates.add(Point.fromLngLat(-118.37091717142867, 33.39114243958559));
-
+        }
     }
 }

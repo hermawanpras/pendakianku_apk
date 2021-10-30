@@ -123,4 +123,12 @@ public interface ApiInterface {
     Call<PendaftaranPendakianResponse> getHistory(
             @Query("id_user") String idUser
     );
+
+    @FormUrlEncoded
+    @POST("SOS/sos")
+    Call<BaseResponse> postSOS(
+            @Field("id_user") String idUser,
+            @Field("lat") String latitude,
+            @Field("long") String longitude
+    );
 }
