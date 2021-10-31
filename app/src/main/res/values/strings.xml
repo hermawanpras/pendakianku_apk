@@ -2,7 +2,7 @@
     <string name="app_name">ModernLogin</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
-    <string name="link">http://192.168.100.236/rest_hermawan/assets/profile/</string>
+    <string name="link">http://192.168.1.7/rest_hermawan/assets/profile/</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoiaGVybWF3YW5wcmFzIiwiYSI6ImNrdW8wZWo4bDQ2bzkyb256c2Y1cmZmaDUifQ.yrYXPJIieyGIdYJ0t1Rqpw</string>
 

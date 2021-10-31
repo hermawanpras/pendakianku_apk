@@ -151,7 +151,7 @@ public class UserBookingActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserBookingActivity.this);
                     builder.setTitle("Konfirmasi Tanggal");
                     builder.setMessage("Anda telah memilih booking pendakian dari tanggal " + tgl_mulai.getText().toString() + " sampai " + tgl_selesai.getText().toString() + ". Apa data sudah benar?");
-                    builder.setPositiveButton("LANJUTKAN", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("LANJUT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             apiInterface.daftarDaki(
@@ -186,10 +186,7 @@ public class UserBookingActivity extends AppCompatActivity {
                         }
                     });
 
-                    //NOW, WE CREATE THE ALERT DIALG OBJECT
                     AlertDialog ad = builder.create();
-
-                    //FINALLY, WE SHOW THE DIALOG
                     ad.show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Jadwal Anda tidak valid. Ada tanggal dengan jalur tutup.", Toast.LENGTH_LONG).show();

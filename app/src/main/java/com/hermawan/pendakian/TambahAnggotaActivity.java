@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hermawan.pendakian.adapter.TambahAnggotaAdapter;
 
@@ -19,6 +20,8 @@ public class TambahAnggotaActivity extends AppCompatActivity {
     EditText jumlahEt;
     Button simpanBtn, selesaiBtn;
     RecyclerView rv;
+
+    String idDaftar;
 
     int jumlahAnggota;
 
@@ -32,6 +35,8 @@ public class TambahAnggotaActivity extends AppCompatActivity {
         selesaiBtn = findViewById(R.id.btnSelesai);
         rv = findViewById(R.id.rv);
 
+        idDaftar = getIntent().getStringExtra("id_daftar");
+
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -39,8 +44,16 @@ public class TambahAnggotaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 jumlahAnggota = Integer.parseInt(jumlahEt.getText().toString());
-                Log.e(TAG, "onClick: " + jumlahAnggota);
-                rv.setAdapter(new TambahAnggotaAdapter(jumlahAnggota, TambahAnggotaActivity.this));
+                rv.setAdapter(new TambahAnggotaAdapter(jumlahAnggota, idDaftar,TambahAnggotaActivity.this));
+            }
+        });
+
+        selesaiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                onBackPressed();
+                Toast.makeText(getApplicationContext(), "Silakan tunggu validasi admin untuk pendaftaran Anda sebelum melakukan pembayaran.", Toast.LENGTH_LONG).show();
             }
         });
     }

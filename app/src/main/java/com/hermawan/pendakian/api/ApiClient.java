@@ -32,7 +32,11 @@ public class ApiClient {
             retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
 //                    .baseUrl("https://poinku.my.id/api/")
+<<<<<<< Updated upstream
                     .baseUrl("http://192.168.1.62/restAPI_skripsi/api/")
+=======
+                    .baseUrl("http://192.168.1.7/rest_hermawan/api/")
+>>>>>>> Stashed changes
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(builder))
                     .build();

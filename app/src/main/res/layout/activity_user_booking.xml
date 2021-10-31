@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:text="Cek Pembayaran"/>
+                android:text="Pendaftaran Pendakian"/>
 
         </FrameLayout>
 
@@ -74,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_date_range_black_24dp"/>
+
                 </LinearLayout>
 
                 <TextView

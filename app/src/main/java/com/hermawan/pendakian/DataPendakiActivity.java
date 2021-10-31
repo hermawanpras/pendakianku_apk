@@ -209,7 +209,9 @@ public class DataPendakiActivity extends AppCompatActivity {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response != null) {
                     if (response.body().status) {
-                        startActivity(new Intent(DataPendakiActivity.this, TambahAnggotaActivity.class));
+                        Intent i = new Intent(DataPendakiActivity.this, TambahAnggotaActivity.class);
+                        i.putExtra("id_daftar", id);
+                        startActivity(i);
                         finish();
                     } else {
                         Toast.makeText(DataPendakiActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();

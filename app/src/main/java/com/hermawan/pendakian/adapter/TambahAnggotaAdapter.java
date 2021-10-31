@@ -23,10 +23,13 @@ import java.util.List;
 
 public class TambahAnggotaAdapter extends RecyclerView.Adapter<TambahAnggotaAdapter.ViewHolder> {
     private static int jumlah;
+    String idDaftar;
     Context context;
+    boolean clicked = false;
 
-    public TambahAnggotaAdapter(int jumlah, Context context) {
+    public TambahAnggotaAdapter(int jumlah, String idDaftar, Context context) {
         TambahAnggotaAdapter.jumlah = jumlah;
+        this.idDaftar = idDaftar;
         this.context = context;
     }
 
@@ -51,9 +54,16 @@ public class TambahAnggotaAdapter extends RecyclerView.Adapter<TambahAnggotaAdap
         holder.tambahBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, TambahAnggotaDetailActivity.class));
+                clicked = true;
+                Intent i = new Intent(context, TambahAnggotaDetailActivity.class);
+                i.putExtra("id_daftar", idDaftar);
+                context.startActivity(i);
             }
         });
+
+        if (clicked) {
+            holder.tambahBtn.setEnabled(false);
+        }
 
         holder.nomorAnggotaTv.setText("Anggota " + (position+1));
     }
