@@ -1,4 +1,4 @@
-package com.hermawan.pendakian;
+package com.hermawan.pendakian.fragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class AdminHomeFragmentAdapter extends FragmentStateAdapter {
-    public AdminHomeFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+public class AdminLaporanFragmentAdapter extends FragmentStateAdapter {
+    public AdminLaporanFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 
@@ -16,14 +16,16 @@ public class AdminHomeFragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 1:
-                return new AdminPandermanFragment();
+                return new AdminLaporanSosFragment();
+            case 2:
+                return new AdminLaporanReportFragment();
         }
 
-        return new AdminButhakFragment();
+        return new AdminLaporanBlacklistFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }

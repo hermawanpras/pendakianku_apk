@@ -57,11 +57,11 @@ public class SignInActivity extends AppCompatActivity {
 
                                 if (response.body().data.get(0).roleUser.equals("admin")) {
                                     startActivity(new Intent(SignInActivity.this, AdminMainMenuActivity.class));
-                                    Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_LONG).show();
                                     finish();
                                 } else {
                                     startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
-                                    Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_LONG).show();
                                     finish();
                                 }
 

@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:text="Cek Pendaftaran"/>
+                android:text="Cek Pendaftaran Pendakian"/>
 
         </FrameLayout>
 
@@ -35,6 +35,15 @@
         android:layout_height="2dp"
         android:background="@color/background"/>
 
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabLayout"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"/>
     
 
 </LinearLayout>

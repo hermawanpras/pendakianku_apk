@@ -1,6 +1,5 @@
 package com.hermawan.pendakian;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.hermawan.pendakian.adapter.DetailJalurAdapter;
+import com.hermawan.pendakian.fragment.AdminHomeFragmentAdapter;
 
 public class AdminHomeActivity extends Fragment {
 
@@ -36,8 +35,8 @@ public class AdminHomeActivity extends Fragment {
         adapter = new AdminHomeFragmentAdapter(fm, getLifecycle());
         viewPager2.setAdapter(adapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Buthak"));
         tabLayout.addTab(tabLayout.newTab().setText("Panderman"));
+        tabLayout.addTab(tabLayout.newTab().setText("Buthak"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

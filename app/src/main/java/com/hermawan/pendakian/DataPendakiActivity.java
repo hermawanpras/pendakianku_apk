@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,10 +54,14 @@ public class DataPendakiActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_pendaki);
+
+
 
         apiInterface = ApiClient.getClient();
 
@@ -141,6 +146,12 @@ public class DataPendakiActivity extends AppCompatActivity {
         simpanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(DataPendakiActivity.this);
+                progressDialog.setCancelable(false);
+                progressDialog.setTitle("Pesan");
+                progressDialog.setMessage("Mohon tunggu sebentar...");
+                progressDialog.show();
+
                 UserResponse.UserModel u = AppPreference.getUser(getApplicationContext());
 
                 apiInterface.getIdDaftar(
@@ -209,6 +220,9 @@ public class DataPendakiActivity extends AppCompatActivity {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response != null) {
                     if (response.body().status) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                         Intent i = new Intent(DataPendakiActivity.this, TambahAnggotaActivity.class);
                         i.putExtra("id_daftar", id);
                         startActivity(i);

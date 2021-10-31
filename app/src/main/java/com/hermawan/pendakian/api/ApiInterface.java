@@ -1,11 +1,14 @@
 package com.hermawan.pendakian.api;
 
 import com.hermawan.pendakian.api.response.BaseResponse;
+import com.hermawan.pendakian.api.response.BlacklistResponse;
 import com.hermawan.pendakian.api.response.DetailJalurResponse;
 import com.hermawan.pendakian.api.response.InfoJalurResponse;
 import com.hermawan.pendakian.api.response.KuotaResponse;
 import com.hermawan.pendakian.api.response.KuotayJalurResponse;
+import com.hermawan.pendakian.api.response.PembayaranResponse;
 import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
+import com.hermawan.pendakian.api.response.PendakiResponse;
 import com.hermawan.pendakian.api.response.TitikJalurResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
 
@@ -26,19 +29,6 @@ public interface ApiInterface {
     Call<UserResponse> login(
             @Query("email") String email,
             @Query("password") String password
-    );
-
-    @GET("InfoJalur/infojalur")
-    Call<InfoJalurResponse> infojalur();
-
-    @GET("InfoJalur/kuota")
-    Call<KuotaResponse> getKuota(
-            @Query("id_info_jalur") String id_info_jalur
-    );
-
-    @GET("PendaftaranPendakian/daftar")
-    Call<KuotayJalurResponse> getKuotayInfoJalur(
-            @Query("id_info_jalur") String id_info_jalur
     );
 
     @FormUrlEncoded //jika tidak upload gamar
@@ -71,11 +61,6 @@ public interface ApiInterface {
             @Query("id_info_jalur") String idInfoJalur,
             @Query("tgl_mulai") String tanggalMulai,
             @Query("tgl_selesai") String tanggalSelesai
-    );
-
-    @GET("detail_jalur/dj_home_user")
-    Call<DetailJalurResponse> getJalur(
-            @Query("tanggal_jalur") String tanggalJalur
     );
 
     @FormUrlEncoded
@@ -130,5 +115,79 @@ public interface ApiInterface {
             @Field("id_user") String idUser,
             @Field("lat") String latitude,
             @Field("long") String longitude
+    );
+
+    @GET("pendaftaran_pendakian/cek_daftar")
+    Call<PendaftaranPendakianResponse> cekDaftar(
+            @Query("id_daftar") String idDaftar,
+            @Query("id_info_jalur") String idInfoJalur
+    );
+
+    @GET("pendaki/get_pendaki")
+    Call<PendakiResponse> getPendaki(
+            @Query("id_pendaki") String idPendaki,
+            @Query("id_daftar") String idDaftar
+    );
+
+    @GET("pendaki/get_pendaki_by_id_daftar")
+    Call<PendakiResponse> getPendakiByIdDaftar(
+            @Query("id_daftar") String idDaftar
+    );
+
+    @GET("pendaftaran_pendakian/validasi_pendaftaran")
+    Call<BaseResponse> validasiPendaftaran(
+            @Query("id_daftar") String idDaftar
+    );
+
+    @Multipart
+    @POST("pembayaran/bayar")
+    Call<BaseResponse> bayarPendakian(
+            @Part("id_daftar") RequestBody idDaftar,
+            @Part("tanggal_bayar") RequestBody tglBayar,
+            @Part("nominal") RequestBody nominal,
+            @Part("nama_rekening") RequestBody namaRekening,
+            @Part("bank_pengirim") RequestBody bankPengirim,
+            @Part MultipartBody.Part image
+    );
+
+    @GET("pembayaran")
+    Call<PembayaranResponse> getPembayaran(
+            @Query("id_pembayaran") String idPembayaran
+    );
+
+    @GET("pembayaran/validasi_pembayaran")
+    Call<BaseResponse> validasiPembayaran(
+            @Query("id_pembayaran") String idPembayaran,
+            @Query("id_daftar") String idDaftar
+    );
+
+    @GET("blacklist/search")
+    Call<PendakiResponse> search(
+            @Query("no_identitas") String noIdentitas
+    );
+
+    @GET("blacklist")
+    Call<BlacklistResponse> getBlacklist(
+            @Query("id_pendaki") String idPendaki
+    );
+
+    @FormUrlEncoded
+    @POST("blacklist/tambah")
+    Call<BaseResponse> tambahBlacklist(
+            @Field("id_pendaki") String idPendaki,
+            @Field("tgl_mulai") String tglMulai,
+            @Field("tgl_selesai") String tglSelesai,
+            @Field("keterangan") String keterangan,
+            @Field("status") String status
+    );
+
+    @GET("pembayaran/get_pembayaran_by_id_daftar")
+    Call<PembayaranResponse> getPembayaranByIdDaftar(
+            @Query("id_daftar") String idDaftar
+    );
+
+    @GET("detail_jalur")
+    Call<DetailJalurResponse> getDetailJalur(
+            @Query("id_detail_jalur") String idDetailJalur
     );
 }

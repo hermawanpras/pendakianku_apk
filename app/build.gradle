@@ -84,4 +84,8 @@ dependencies {
 
     //Image Picker Library for Android
     implementation 'com.github.dhaval2404:imagepicker:1.8'
+
+    //qrreader
+    implementation 'com.github.nisrulz:qreader:2.1.1'
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
 }

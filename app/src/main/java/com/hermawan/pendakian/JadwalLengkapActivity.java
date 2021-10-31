@@ -43,7 +43,7 @@ public class JadwalLengkapActivity extends AppCompatActivity {
 
         String judul = getIntent().getStringExtra("NAMA_GUNUNG");
         String idInfoJalur = getIntent().getStringExtra("ID_INFO_JALUR");
-        judulTv.setText("JADWAL " + judul);
+        judulTv.setText("Jadwal " + judul);
 
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

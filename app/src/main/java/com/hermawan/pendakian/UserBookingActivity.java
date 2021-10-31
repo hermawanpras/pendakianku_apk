@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,11 +56,17 @@ public class UserBookingActivity extends AppCompatActivity {
     String tglMulaiServer, tglSelesaiServer;
 
     boolean tanggalValid = false;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_booking);
+
+        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Pesan");
+        progressDialog.setMessage("Mohon tunggu sebentar...");
 
         apiInterface = ApiClient.getClient();
 
@@ -164,7 +171,7 @@ public class UserBookingActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                                     if (response.body().status) {
-                                        Intent intent = new Intent(getApplicationContext(), DataPendakiActivity.class);
+                                        Intent intent = new Intent(UserBookingActivity.this, DataPendakiActivity.class);
                                         startActivity(intent);
                                     } else {
                                         Toast.makeText(UserBookingActivity.this, "Terjadi kesalahan.", Toast.LENGTH_SHORT).show();
@@ -200,9 +207,9 @@ public class UserBookingActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), JadwalLengkapActivity.class);
                 String namaGunung = "";
                 if (idInfoJalur.equals("1")) {
-                    namaGunung = "GUNUNG PANDERMAN";
+                    namaGunung = "Gn. Panderman";
                 } else {
-                    namaGunung = "GUNUNG BUTHAK";
+                    namaGunung = "Gn. Buthak";
                 }
 
                 intent.putExtra("NAMA_GUNUNG", namaGunung);

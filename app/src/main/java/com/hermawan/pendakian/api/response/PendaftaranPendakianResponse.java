@@ -30,7 +30,13 @@ public class PendaftaranPendakianResponse extends BaseResponse {
         @SerializedName("status_pendakian")
         public String statusPendakian;
 
-        public PendaftaranPendakianModel(String idDaftar, String idUser, String idInfoJalur, String tglDaftarPendakian, String tglMulaiPendakian, String tglSelesaiPendakian, String statusPendakian) {
+        @SerializedName("nama_user")
+        public String namaUser;
+
+        @SerializedName("nama_gunung")
+        public String namaGunung;
+
+        public PendaftaranPendakianModel(String idDaftar, String idUser, String idInfoJalur, String tglDaftarPendakian, String tglMulaiPendakian, String tglSelesaiPendakian, String statusPendakian, String namaUser, String namaGunung) {
             this.idDaftar = idDaftar;
             this.idUser = idUser;
             this.idInfoJalur = idInfoJalur;
@@ -38,6 +44,8 @@ public class PendaftaranPendakianResponse extends BaseResponse {
             this.tglMulaiPendakian = tglMulaiPendakian;
             this.tglSelesaiPendakian = tglSelesaiPendakian;
             this.statusPendakian = statusPendakian;
+            this.namaUser = namaUser;
+            this.namaGunung = namaGunung;
         }
 
         public String getIdDaftar() {
@@ -94,6 +102,22 @@ public class PendaftaranPendakianResponse extends BaseResponse {
 
         public void setStatusPendakian(String statusPendakian) {
             this.statusPendakian = statusPendakian;
+        }
+
+        public String getNamaUser() {
+            return namaUser;
+        }
+
+        public void setNamaUser(String namaUser) {
+            this.namaUser = namaUser;
+        }
+
+        public String getNamaGunung() {
+            return namaGunung;
+        }
+
+        public void setNamaGunung(String namaGunung) {
+            this.namaGunung = namaGunung;
         }
     }
 }

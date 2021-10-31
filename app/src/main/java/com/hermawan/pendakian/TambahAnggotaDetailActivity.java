@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -53,6 +54,7 @@ public class TambahAnggotaDetailActivity extends AppCompatActivity {
     String idDaftar;
 
     ApiInterface apiInterface;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,12 @@ public class TambahAnggotaDetailActivity extends AppCompatActivity {
                 builder.setPositiveButton("LANJUT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        progressDialog = new ProgressDialog(TambahAnggotaDetailActivity.this);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setTitle("Pesan");
+                        progressDialog.setMessage("Mohon tunggu sebentar...");
+                        progressDialog.show();
+
                         simpan(idDaftar,
                                 noIdentitasEt.getText().toString().trim(),
                                 namaEt.getText().toString().trim(),
@@ -206,6 +214,9 @@ public class TambahAnggotaDetailActivity extends AppCompatActivity {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response != null) {
                     if (response.body().status) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                         onBackPressed();
                         Toast.makeText(TambahAnggotaDetailActivity.this, "Anggota berhasil ditambahkan.", Toast.LENGTH_LONG).show();
                     } else {

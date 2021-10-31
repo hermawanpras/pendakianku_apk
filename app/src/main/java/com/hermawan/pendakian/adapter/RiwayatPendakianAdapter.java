@@ -1,6 +1,7 @@
 package com.hermawan.pendakian.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
+import com.hermawan.pendakian.DetailPendaftaranPendakianActivity;
 import com.hermawan.pendakian.R;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.DetailJalurResponse;
@@ -22,7 +24,6 @@ import java.util.List;
 public class RiwayatPendakianAdapter extends RecyclerView.Adapter<RiwayatPendakianAdapter.ViewHolder> {
     private static List<PendaftaranPendakianResponse.PendaftaranPendakianModel> list;
     Context context;
-    ApiInterface apiInterface;
 
     public RiwayatPendakianAdapter(List<PendaftaranPendakianResponse.PendaftaranPendakianModel> list, Context context) {
         RiwayatPendakianAdapter.list = list;
@@ -50,15 +51,14 @@ public class RiwayatPendakianAdapter extends RecyclerView.Adapter<RiwayatPendaki
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "ptenai", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(context, DetailPendaftaranPendakianActivity.class);
+                i.putExtra("id_daftar", list.get(position).getIdDaftar());
+                i.putExtra("id_info_jalur", list.get(position).getIdInfoJalur());
+                context.startActivity(i);
             }
         });
 
-        if (list.get(position).getIdInfoJalur().equals("1")) {
-            holder.namaGunungTv.setText("Gunung Panderman");
-        } else {
-            holder.namaGunungTv.setText("Gunung Buthak");
-        }
+        holder.namaGunungTv.setText(list.get(position).getNamaGunung());
 
         holder.tglDaftarTv.setText("Didaftarkan pada " +  list.get(position).getTglDaftarPendakian());
         holder.tglPendakianTv.setText(list.get(position).getTglMulaiPendakian() + " - " + list.get(position).getTglSelesaiPendakian());
@@ -66,11 +66,13 @@ public class RiwayatPendakianAdapter extends RecyclerView.Adapter<RiwayatPendaki
         if (list.get(position).getStatusPendakian().equals("0")) {
             holder.chip.setText("Belum divalidasi");
         } else if (list.get(position).getStatusPendakian().equals("1")) {
-            holder.chip.setText("Sudah dibayar");
+            holder.chip.setText("Belum dibayar");
         } else if (list.get(position).getStatusPendakian().equals("2")) {
+            holder.chip.setText("Sudah dibayar");
+        } else if (list.get(position).getStatusPendakian().equals("3")) {
+            holder.chip.setText("Sudah cekin");
+        }else if (list.get(position).getStatusPendakian().equals("4")) {
             holder.chip.setText("Selesai");
-        }else if (list.get(position).getStatusPendakian().equals("3")) {
-            holder.chip.setText("Dibatalkan");
         }
     }
 

@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:text="Cek Pembayaran"/>
+                android:text="Cek Pembayaran Pendakian"/>
 
         </FrameLayout>
 
@@ -34,5 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/background"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv" />
 
 </LinearLayout>

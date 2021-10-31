@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:text="Cek Pendaftaran"/>
+                android:text="Cek Scan QR Code"/>
 
         </FrameLayout>
 
@@ -34,5 +34,11 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/background"/>
+
+    <SurfaceView
+        android:id="@+id/camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

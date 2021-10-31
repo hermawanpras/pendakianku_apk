@@ -367,10 +367,10 @@ public class UserHomeFragment extends Fragment {
 
     private void buildLocationRequest() {
         locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setSmallestDisplacement(10.0f);
+        //locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(5000);
+//        locationRequest.setFastestInterval(3000);
+//        locationRequest.setSmallestDisplacement(10.0f);
     }
 
     private void buildLocationCallBack() {
@@ -380,7 +380,7 @@ public class UserHomeFragment extends Fragment {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
-                common.current_location = locationResult.getLastLocation();
+                //common.current_location = locationResult.getLastLocation();
             }
         };
     }

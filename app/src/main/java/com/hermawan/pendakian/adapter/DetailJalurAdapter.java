@@ -1,6 +1,7 @@
 package com.hermawan.pendakian.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
+import com.hermawan.pendakian.EditDetailJalurActivity;
 import com.hermawan.pendakian.R;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.DetailJalurResponse;
@@ -50,7 +52,9 @@ public class DetailJalurAdapter extends RecyclerView.Adapter<DetailJalurAdapter.
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "ptenai", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(context, EditDetailJalurActivity.class);
+                i.putExtra("id_detail_jalur", list.get(position).getIdDetailJalur());
+                context.startActivity(i);
             }
         });
 

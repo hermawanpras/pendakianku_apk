@@ -142,7 +142,7 @@ public class TambahDetailJalurActivity extends AppCompatActivity implements Adap
                             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                                 if (response != null) {
                                     if (response.body().status) {
-                                        startActivity(new Intent(TambahDetailJalurActivity.this, AdminHomeActivity.class));
+                                        onBackPressed();
                                         Toast.makeText(TambahDetailJalurActivity.this, "Detail Jalur berhasil ditambahkan", Toast.LENGTH_LONG).show();
                                         finish();
                                     }
