@@ -15,12 +15,21 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hermawan.pendakian.api.ApiClient;
+import com.hermawan.pendakian.api.ApiInterface;
+import com.hermawan.pendakian.api.response.BaseResponse;
+import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 import com.hermawan.pendakian.util.RPResultListener;
 import com.hermawan.pendakian.util.RuntimePermissionUtil;
 
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CekScanActivity extends AppCompatActivity {
 
@@ -31,6 +40,12 @@ public class CekScanActivity extends AppCompatActivity {
     private static final String cameraPerm = Manifest.permission.CAMERA;
     boolean hasCameraPermission = false;
 
+    TextView text;
+    Button detailBtn;
+
+    String idDaftar;
+    ApiInterface apiInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +53,34 @@ public class CekScanActivity extends AppCompatActivity {
         hasCameraPermission = RuntimePermissionUtil.checkPermissonGranted(this, cameraPerm);
 
         mySurfaceView = (SurfaceView) findViewById(R.id.camera_view);
+        text = findViewById(R.id.hasilScanTv);
+        detailBtn = findViewById(R.id.detailPendakianBtn);
+
+        apiInterface = ApiClient.getClient();
+
+        detailBtn.setVisibility(View.INVISIBLE);
+
+        detailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apiInterface.getIdIj(idDaftar).enqueue(new Callback<PendaftaranPendakianResponse>() {
+                    @Override
+                    public void onResponse(Call<PendaftaranPendakianResponse> call, Response<PendaftaranPendakianResponse> response) {
+                        if (response.body().status) {
+                            Intent i = new Intent(CekScanActivity.this, DetailPendaftaranPendakianActivity.class);
+                            i.putExtra("id_daftar", idDaftar);
+                            i.putExtra("id_info_jalur", response.body().data.get(0).getIdInfoJalur());
+                            startActivity(i);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PendaftaranPendakianResponse> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         if (hasCameraPermission) {
             // Setup QREader
@@ -59,6 +102,14 @@ public class CekScanActivity extends AppCompatActivity {
             @Override
             public void onDetected(final String data) {
                 Log.d("QREader", "Value : " + data);
+                text.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        idDaftar = data;
+                        text.setText("KB_" + data + "_PPB");
+                        detailBtn.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         }).facing(QREader.BACK_CAM)
                 .enableAutofocus(true)

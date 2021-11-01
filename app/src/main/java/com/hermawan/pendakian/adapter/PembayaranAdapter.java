@@ -71,7 +71,7 @@ public class PembayaranAdapter extends RecyclerView.Adapter<PembayaranAdapter.Vi
         }
 
         Glide.with(context)
-                .load(context.getString(R.string.link) + list.get(position).getFotoProfil())
+                .load(context.getString(R.string.base_url) + context.getString(R.string.link_profile) + list.get(position).getFotoProfil())
                 .fitCenter()
                 .into(holder.fotoIv);
     }

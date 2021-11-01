@@ -4,6 +4,7 @@ import com.hermawan.pendakian.api.response.BaseResponse;
 import com.hermawan.pendakian.api.response.BlacklistResponse;
 import com.hermawan.pendakian.api.response.DetailJalurResponse;
 import com.hermawan.pendakian.api.response.InfoJalurResponse;
+import com.hermawan.pendakian.api.response.JumlahPendakiResponse;
 import com.hermawan.pendakian.api.response.KuotaResponse;
 import com.hermawan.pendakian.api.response.KuotayJalurResponse;
 import com.hermawan.pendakian.api.response.PembayaranResponse;
@@ -134,8 +135,19 @@ public interface ApiInterface {
             @Query("id_daftar") String idDaftar
     );
 
+    @GET("pendaftaran_pendakian/get_jumlah")
+    Call<JumlahPendakiResponse> getJumlahPendaki(
+            @Query("id_daftar") String idDaftar
+    );
+
     @GET("pendaftaran_pendakian/validasi_pendaftaran")
     Call<BaseResponse> validasiPendaftaran(
+            @Query("id_daftar") String idDaftar,
+            @Query("status") String status
+    );
+
+    @GET("pendaftaran_pendakian/get_id_info_jalur")
+    Call<PendaftaranPendakianResponse> getIdIj(
             @Query("id_daftar") String idDaftar
     );
 

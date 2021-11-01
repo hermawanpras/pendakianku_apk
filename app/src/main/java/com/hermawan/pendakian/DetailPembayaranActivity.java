@@ -88,7 +88,7 @@ public class DetailPembayaranActivity extends AppCompatActivity {
                     bankPengTv.setText(pm.getBankPengirim());
 
                     Glide.with(getApplicationContext())
-                            .load(getString(R.string.link_pembayaran) + pm.getBukti())
+                            .load( getString(R.string.base_url) + getString(R.string.link_pembayaran) + pm.getBukti())
                             .centerCrop()
                             .into(buktiIv);
 

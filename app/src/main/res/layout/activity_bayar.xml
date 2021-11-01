@@ -42,6 +42,60 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informasi Pembayaran"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Silakan lakukan pembayaran ke rekening berikut dengan nominal transfer yang sama."
+            android:textColor="@color/black"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bank Rakyat Indonesia (BRI)"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="042901028255508"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hermawan Prasetyo"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp. 000000"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:id="@+id/totalBayarTv"
+            android:layout_marginBottom="20dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

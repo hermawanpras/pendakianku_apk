@@ -75,31 +75,93 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
     void setButton(String role, String status) {
         if (role.equals("admin")) {
-            validasiDaftarBtn.setText("VALIDASI PENDAFTARAN");
-            validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    apiInterface.validasiPendaftaran(
-                            idDaftar
-                    ).enqueue(new Callback<BaseResponse>() {
-                        @Override
-                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                            if (response != null) {
-                                if (response.body().status) {
-                                    Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran berhasil", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran gagal", Toast.LENGTH_LONG).show();
+            if (status.equals("0")) {
+                validasiDaftarBtn.setText("VALIDASI PENDAFTARAN");
+                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        apiInterface.validasiPendaftaran(
+                                idDaftar,
+                                "1"
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response != null) {
+                                    if (response.body().status) {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran berhasil", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran gagal", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<BaseResponse> call, Throwable t) {
-                            Log.e("login", t.getMessage());
-                        }
-                    });
-                }
-            });
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("login", t.getMessage());
+                            }
+                        });
+                    }
+                });
+            } else if (status.equals("2")) {
+                validasiDaftarBtn.setText("KONFIRMASI CEKIN");
+                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        apiInterface.validasiPendaftaran(
+                                idDaftar,
+                                "3"
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response != null) {
+                                    if (response.body().status) {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin berhasil", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin gagal", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("login", t.getMessage());
+                            }
+                        });
+                    }
+                });
+            } else if (status.equals("3")) {
+                validasiDaftarBtn.setText("KONFIRMASI CEKOUT");
+                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        apiInterface.validasiPendaftaran(
+                                idDaftar,
+                                "4"
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response != null) {
+                                    if (response.body().status) {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout berhasil", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout gagal", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("login", t.getMessage());
+                            }
+                        });
+                    }
+                });
+            } else if (status.equals("1")) {
+                validasiDaftarBtn.setText("MENUNGGU PEMBAYARAN");
+            } else if (status.equals("4")) {
+                validasiDaftarBtn.setText("SELESAI");
+            }
+
         } else {
             if (status.equals("2")) {
                 validasiDaftarBtn.setText("DETAIL PEMBAYARAN");
@@ -165,9 +227,13 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
                         chip.setText("Selesai");
                     }
 
-                    if (pm.getStatusPendakian().equals("0") && user.roleUser.equals("admin")) {
+                    if ((pm.getStatusPendakian().equals("2")
+                            || pm.getStatusPendakian().equals("3")
+                            || pm.getStatusPendakian().equals("0")) && user.roleUser.equals("admin")) {
                         validasiDaftarBtn.setEnabled(true);
-                    } else if ((pm.getStatusPendakian().equals("2")
+                    } else if ((
+                            pm.getStatusPendakian().equals("1")
+                    ||pm.getStatusPendakian().equals("2")
                             || pm.getStatusPendakian().equals("3")
                     || pm.getStatusPendakian().equals("4"))&& user.roleUser.equals("user")) {
                         validasiDaftarBtn.setEnabled(true);

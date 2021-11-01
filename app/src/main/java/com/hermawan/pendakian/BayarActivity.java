@@ -14,14 +14,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.BaseResponse;
+import com.hermawan.pendakian.api.response.JumlahPendakiResponse;
+import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,6 +43,7 @@ public class BayarActivity extends AppCompatActivity {
     EditText tglBayar, nominal, namaRekening, bankPengirim;
     ImageView buktiBayar, tglTransferBtn;
     Button konfirmBayarBtn, pilihFotoBtn;
+    TextView totalBayarTv;
 
     ApiInterface apiInterface;
 
@@ -62,6 +68,9 @@ public class BayarActivity extends AppCompatActivity {
         buktiBayar = findViewById(R.id.buktiBayarIv);
         konfirmBayarBtn = findViewById(R.id.konfirmBayarBtn);
         pilihFotoBtn = findViewById(R.id.pilihFotoBtn);
+        totalBayarTv = findViewById(R.id.totalBayarTv);
+
+        getJumlah();
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormatView = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
@@ -104,6 +113,26 @@ public class BayarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkData();
+            }
+        });
+    }
+
+    private void getJumlah() {
+        apiInterface.getJumlahPendaki(id).enqueue(new Callback<JumlahPendakiResponse>() {
+            @Override
+            public void onResponse(Call<JumlahPendakiResponse> call, Response<JumlahPendakiResponse> response) {
+                if (response.body().status) {
+                    JumlahPendakiResponse.JumlahPendakiModel j = response.body().data.get(0);
+
+                    int total = Integer.parseInt(j.getJumlahPendaki().toString()) * 15000;
+                    totalBayarTv.setText(NumberFormat.getCurrencyInstance(new Locale("en", "ID"))
+                            .format(total));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JumlahPendakiResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

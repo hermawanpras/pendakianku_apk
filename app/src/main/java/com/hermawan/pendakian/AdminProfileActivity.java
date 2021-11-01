@@ -41,7 +41,7 @@ public class AdminProfileActivity extends Fragment {
         UserResponse.UserModel u =  AppPreference.getUser(getContext());
 
         Glide.with(getContext())
-                .load(getString(R.string.link) + u.fotoProfil)
+                .load(getString(R.string.base_url) + getString(R.string.link_profile)+ u.fotoProfil)
                 .centerCrop()
                 .into(fotoIv);
 

@@ -65,12 +65,12 @@ public class DetailPendakiActivity extends AppCompatActivity {
                     noTelpTv.setText(pm.getNoTelp());
 
                     Glide.with(getApplicationContext())
-                            .load(getString(R.string.link_identitas) + pm.getIdentitasPendaki())
+                            .load( getString(R.string.base_url) + getString(R.string.link_identitas) + pm.getIdentitasPendaki())
                             .fitCenter()
                             .into(identitasIv);
 
                     Glide.with(getApplicationContext())
-                            .load(getString(R.string.link_surat) + pm.getSuratKetKes())
+                            .load(getString(R.string.base_url) + getString(R.string.link_surat) + pm.getSuratKetKes())
                             .fitCenter()
                             .into(ketKesIv);
                 }
