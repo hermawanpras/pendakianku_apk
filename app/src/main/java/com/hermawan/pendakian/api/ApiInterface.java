@@ -10,6 +10,8 @@ import com.hermawan.pendakian.api.response.KuotayJalurResponse;
 import com.hermawan.pendakian.api.response.PembayaranResponse;
 import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 import com.hermawan.pendakian.api.response.PendakiResponse;
+import com.hermawan.pendakian.api.response.ReportResponse;
+import com.hermawan.pendakian.api.response.ReportUmurResponse;
 import com.hermawan.pendakian.api.response.TitikJalurResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
 
@@ -201,5 +203,15 @@ public interface ApiInterface {
     @GET("detail_jalur")
     Call<DetailJalurResponse> getDetailJalur(
             @Query("id_detail_jalur") String idDetailJalur
+    );
+
+    @GET("report/get_report")
+    Call<ReportResponse> getReport(
+            @Query("bulan") String bulan
+    );
+
+    @GET("report/get_report_umur")
+    Call<ReportUmurResponse> getReportUmur(
+            @Query("bulan") String bulan
     );
 }

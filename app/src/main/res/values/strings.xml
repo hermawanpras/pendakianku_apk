@@ -2,7 +2,7 @@
     <string name="app_name">ModernLogin</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
-    <string name="base_url">http://192.168.1.7/</string>
+    <string name="base_url">http://192.168.1.5/</string>
     <string name="link_profile">rest_hermawan/assets/profile/</string>
     <string name="link_identitas">rest_hermawan/assets/pendakian/identitas/</string>
     <string name="link_surat">rest_hermawan/assets/pendakian/surat_kesehatan/</string>
