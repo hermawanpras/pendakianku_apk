@@ -15,12 +15,13 @@ public class AdminLaporanFragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
+            case 0:
+                return new AdminLaporanBlacklistFragment();
             case 1:
                 return new AdminLaporanSosFragment();
             case 2:
                 return new AdminLaporanReportFragment();
         }
-
         return new AdminLaporanBlacklistFragment();
     }
 

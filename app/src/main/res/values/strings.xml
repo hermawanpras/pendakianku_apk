@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ModernLogin</string>
+    <string name="app_name">Pendakian Panderman dan Buthak</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="base_url">http://192.168.1.5/</string>

@@ -1,5 +1,6 @@
 package com.hermawan.pendakian.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hermawan.pendakian.R;
+import com.hermawan.pendakian.SOSActivity;
 import com.hermawan.pendakian.adapter.PendaftaranPendakianAdapter;
+import com.hermawan.pendakian.adapter.SOSAdapter;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
+import com.hermawan.pendakian.api.response.SOSResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,27 +53,36 @@ public class AdminLaporanSosFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //getData();
+        getData();
 
         return view;
     }
 
     private void getData() {
-        apiInterface.cekDaftar("", "2").enqueue(new Callback<PendaftaranPendakianResponse>() {
+        apiInterface.getSOS().enqueue(new Callback<SOSResponse>() {
             @Override
-            public void onResponse(Call<PendaftaranPendakianResponse> call, Response<PendaftaranPendakianResponse> response) {
-                if (response.body().status) {
-                    List<PendaftaranPendakianResponse.PendaftaranPendakianModel> list = new ArrayList<>();
-
-                    list.addAll(response.body().data);
-
-                    rv.setAdapter(new PendaftaranPendakianAdapter(list, getContext()));
+            public void onResponse(Call<SOSResponse> call, Response<SOSResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().status) {
+                        rv.setAdapter(new SOSAdapter(response.body().data, new SOSAdapter.OnItemClick() {
+                            @Override
+                            public void onClick(String idSos, String nama, double latitude, double longitude, int isSeen) {
+                                Intent intent = new Intent(getActivity(), SOSActivity.class);
+                                intent.putExtra("idSos", idSos);
+                                intent.putExtra("nama", nama);
+                                intent.putExtra("latitude", latitude);
+                                intent.putExtra("longitude", longitude);
+                                intent.putExtra("isSeen", isSeen);
+                                startActivity(intent);
+                            }
+                        }));
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<PendaftaranPendakianResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<SOSResponse> call, Throwable t) {
+
             }
         });
     }

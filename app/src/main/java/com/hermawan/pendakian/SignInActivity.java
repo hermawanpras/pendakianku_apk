@@ -1,5 +1,6 @@
 package com.hermawan.pendakian;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
+import com.hermawan.pendakian.api.response.BaseResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
 import com.hermawan.pendakian.preference.AppPreference;
 
@@ -64,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
                                     Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_LONG).show();
                                     finish();
                                 }
-
+                                updateToken(response.body().data.get(0).idUser);
                             } else {
                                 startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                             }
@@ -78,5 +83,35 @@ public class SignInActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void updateToken(String idUser) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TOKEN", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        apiInterface.postToken(
+                                idUser,
+                                token
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                Log.e("token", response.body().message);
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("token", t.getMessage());
+                            }
+                        });
+                    }
+                });
     }
 }

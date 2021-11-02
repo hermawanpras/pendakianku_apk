@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
-import com.hermawan.pendakian.api.response.TitikJalurResponse;
+import com.hermawan.pendakian.api.response.BaseResponse;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -21,10 +21,6 @@ import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.android.core.location.LocationEngineResult;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.geojson.LineString;
-import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -40,10 +36,8 @@ import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,8 +48,7 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
-public class TrackingActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
-
+public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener {
     private static final long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
     private static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
     private MapboxMap mapboxMap;
@@ -68,115 +61,76 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
     private MapView mapView;
-    private ApiInterface apiInterface;
 
-    private String idGunung;
+    private String nama, idSos;
+    private double latitude, longitude;
+    private int isSeen;
+
+    private ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
-        setContentView(R.layout.activity_tracking);
-
-        idGunung = getIntent().getStringExtra("ID_GUNUNG");
+        setContentView(R.layout.activity_s_o_s);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
         apiInterface = ApiClient.getClient();
+
+        idSos = getIntent().getStringExtra("idSos");
+        nama = getIntent().getStringExtra("nama");
+        latitude = getIntent().getDoubleExtra("latitude", 0);
+        longitude = getIntent().getDoubleExtra("longitude", 0);
+        isSeen = getIntent().getIntExtra("isSeen", 0);
+
+        if (isSeen == 0) {
+            updateIsSeen();
+        }
     }
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
 
-        if (idGunung.equals("2")) {
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.9553154, 112.46511727))
-                    .title("Puncak Buthak"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.95014415, 112.46827656))
-                    .title("Pos 4 (Sabana)"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.92863514, 112.48041008))
-                    .title("Pos 3"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.90923188, 112.48057894))
-                    .title("Pos 2"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.90483845, 112.48865806))
-                    .title("Pos 1 (Sumber Air)"));
-        } else if (idGunung.equals("1")) {
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.904278784492679, 112.49667809651169))
-                    .title("Puncak Basundara"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.899537327920576, 112.49306849819214))
-                    .title("Pos 3"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.894659781317856, 112.49211940759074))
-                    .title("Pos 2"));
-            mapboxMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(-7.890905865055769, 112.49649172719035))
-                    .title("Pos 1 (Sumber Air)"));
-        }
+        mapboxMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title("Sinyal SOS dari " + nama));
 
-        apiInterface.getTitikJalur(
-                idGunung
-        ).enqueue(new Callback<TitikJalurResponse>() {
+        mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/hermawanpras/ckvdi12md194714qx5x6fxaem")
+                // Add the SymbolLayer icon image to the map style
+                .withImage(ICON_ID, BitmapFactory.decodeResource(
+                        SOSActivity.this.getResources(), R.drawable.mapbox_marker_icon_default))
+                // Adding a GeoJson source for the SymbolLayer icons.
+                .withLayer(new SymbolLayer(LAYER_ID, SOURCE_ID)
+                        .withProperties(
+                                iconImage(ICON_ID),
+                                iconAllowOverlap(true),
+                                iconIgnorePlacement(true)
+                        )
+                ), new Style.OnStyleLoaded() {
             @Override
-            public void onResponse(Call<TitikJalurResponse> call, Response<TitikJalurResponse> response) {
-                Log.e("data", response.message());
-                if (response.body().status) {
-                    List<Point> jalur = new ArrayList<>();
-                    for (TitikJalurResponse.TitikJalurModel model : response.body().data) {
-                        jalur.add(Point.fromLngLat(Double.parseDouble(model.longitude), Double.parseDouble(model.latitude)));
-                    }
+            public void onStyleLoaded(@NonNull Style style) {
+                enableLocationComponent(style);
+                // Create the LineString from the list of coordinates and then make a GeoJSON
+                // FeatureCollection so we can add the line to our map as a layer.
+//                style.addSource(new GeoJsonSource("line-source",
+//                        FeatureCollection.fromFeatures(new Feature[] {Feature.fromGeometry(
+//                                LineString.fromLngLats(jalur)
+//                        )})));
 
-                    Log.e("data", String.valueOf(response.body().data.size()));
-
-                    mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/hermawanpras/ckvdi12md194714qx5x6fxaem")
-                            // Add the SymbolLayer icon image to the map style
-                            .withImage(ICON_ID, BitmapFactory.decodeResource(
-                                    TrackingActivity.this.getResources(), R.drawable.mapbox_marker_icon_default))
-                            // Adding a GeoJson source for the SymbolLayer icons.
-                            .withLayer(new SymbolLayer(LAYER_ID, SOURCE_ID)
-                                    .withProperties(
-                                            iconImage(ICON_ID),
-                                            iconAllowOverlap(true),
-                                            iconIgnorePlacement(true)
-                                    )
-                            ), new Style.OnStyleLoaded() {
-                        @Override
-                        public void onStyleLoaded(@NonNull Style style) {
-                            enableLocationComponent(style);
-                            // Create the LineString from the list of coordinates and then make a GeoJSON
-                            // FeatureCollection so we can add the line to our map as a layer.
-                            style.addSource(new GeoJsonSource("line-source",
-                                    FeatureCollection.fromFeatures(new Feature[] {Feature.fromGeometry(
-                                            LineString.fromLngLats(jalur)
-                                    )})));
-
-                            // The layer properties for our line. This is where we make the line dotted, set the
-                            // color, etc.
-                            style.addLayer(new LineLayer("linelayer", "line-source").withProperties(
-                                    PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
-                                    PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
-                                    PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
-                                    PropertyFactory.lineWidth(5f),
-                                    PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
-                            ));
-                            // Map is set up and the style has loaded. Now you can add additional data or make other map adjustments.
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TitikJalurResponse> call, Throwable t) {
-                Log.e("error", t.getMessage());
+                // The layer properties for our line. This is where we make the line dotted, set the
+                // color, etc.
+                style.addLayer(new LineLayer("linelayer", "line-source").withProperties(
+                        PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
+                        PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
+                        PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                        PropertyFactory.lineWidth(5f),
+                        PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
+                ));
+                // Map is set up and the style has loaded. Now you can add additional data or make other map adjustments.
             }
         });
     }
@@ -303,9 +257,9 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
     private static class LocationChangeListeningActivityLocationCallback
             implements LocationEngineCallback<LocationEngineResult> {
 
-        private final WeakReference<TrackingActivity> activityWeakReference;
+        private final WeakReference<SOSActivity> activityWeakReference;
 
-        LocationChangeListeningActivityLocationCallback(TrackingActivity activity) {
+        LocationChangeListeningActivityLocationCallback(SOSActivity activity) {
             this.activityWeakReference = new WeakReference<>(activity);
         }
 
@@ -316,7 +270,7 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
          */
         @Override
         public void onSuccess(LocationEngineResult result) {
-            TrackingActivity activity = activityWeakReference.get();
+            SOSActivity activity = activityWeakReference.get();
 
             if (activity != null) {
                 Location location = result.getLastLocation();
@@ -342,11 +296,27 @@ public class TrackingActivity extends AppCompatActivity implements OnMapReadyCal
          */
         @Override
         public void onFailure(@NonNull Exception exception) {
-            TrackingActivity activity = activityWeakReference.get();
+            SOSActivity activity = activityWeakReference.get();
             if (activity != null) {
                 Toast.makeText(activity, exception.getLocalizedMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void updateIsSeen() {
+        apiInterface.updateIsSeenSOS(
+                idSos
+        ).enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                Log.e("sos", response.body().message);
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.e("sos", t.getMessage());
+            }
+        });
     }
 }

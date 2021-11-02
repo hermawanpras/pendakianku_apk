@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TambahAdminActivity"></activity>
+        <activity android:name=".SOSActivity"></activity>
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".TambahAdminActivity" />
         <activity android:name=".EditProfilActivity" />
         <activity android:name=".EditDetailJalurActivity" />
         <activity android:name=".TambahBlacklistActivity" />
@@ -37,10 +39,6 @@
         <activity android:name=".CekPembayaranActivity" />
         <activity android:name=".CekPendaftaranActivity" />
         <activity android:name=".TambahDetailJalurActivity" />
-        <activity android:name=".AdminProfileActivity" />
-        <activity android:name=".AdminLaporanActivity" />
-        <activity android:name=".AdminCekActivity" />
-        <activity android:name=".AdminHomeActivity" />
         <activity android:name=".AdminMainMenuActivity" />
         <activity android:name=".DataAnggotaActivity" />
         <activity android:name=".RegistrasiPendakianActivity" />
@@ -57,7 +55,7 @@
             android:name=".SignUpActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".SplashscreenActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,6 +63,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.MyFireBaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".service.MyFirebaseIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notif" />
     </application>
 
 </manifest>

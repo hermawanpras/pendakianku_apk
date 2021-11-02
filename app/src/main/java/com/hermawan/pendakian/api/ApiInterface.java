@@ -12,6 +12,7 @@ import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 import com.hermawan.pendakian.api.response.PendakiResponse;
 import com.hermawan.pendakian.api.response.ReportResponse;
 import com.hermawan.pendakian.api.response.ReportUmurResponse;
+import com.hermawan.pendakian.api.response.SOSResponse;
 import com.hermawan.pendakian.api.response.TitikJalurResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
 
@@ -213,5 +214,21 @@ public interface ApiInterface {
     @GET("report/get_report_umur")
     Call<ReportUmurResponse> getReportUmur(
             @Query("bulan") String bulan
+    );
+
+    @GET("SOS/getSos")
+    Call<SOSResponse> getSOS();
+
+    @FormUrlEncoded
+    @POST("user/postToken")
+    Call<BaseResponse> postToken(
+            @Field("id_user") String idUser,
+            @Field("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("SOS/update")
+    Call<BaseResponse> updateIsSeenSOS(
+            @Field("id_sos") String idSos
     );
 }

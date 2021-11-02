@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "605702167435",
+    "project_id": "pendakian-3afc8",
+    "storage_bucket": "pendakian-3afc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605702167435:android:ebefa577dc73f09a726d8e",
+        "android_client_info": {
+          "package_name": "com.hermawan.pendakian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605702167435-rn7e4p8va3vdvt68g6uqed0jf7uorobi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hermawan.pendakian",
+            "certificate_hash": "a80cb1af6946be184260e8c86e694df5ef9a1170"
+          }
+        },
+        {
+          "client_id": "605702167435-62ojp5d22auuduj7l3qkurf9tl5nk2i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAujiWsTpZXU-uOoJjd6DIr1-Og-LNjEho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605702167435-62ojp5d22auuduj7l3qkurf9tl5nk2i5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
