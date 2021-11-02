@@ -231,4 +231,32 @@ public interface ApiInterface {
     Call<BaseResponse> updateIsSeenSOS(
             @Field("id_sos") String idSos
     );
+
+    @Multipart
+    @POST("user/edit_profil")
+    Call<BaseResponse> editProfil(
+            @Part("id_user") RequestBody idUser,
+            @Part("nama_user") RequestBody namaUser,
+            @Part("password") RequestBody password,
+            @Part("email") RequestBody email,
+            @Part("no_telp_user") RequestBody noTelp,
+            @Part("alamat_user") RequestBody alamatUser,
+            @Part MultipartBody.Part image
+    );
+
+    @Multipart
+    @POST("user/tambah_admin")
+    Call<BaseResponse> tambahAdmin(
+            @Part("nama_user") RequestBody namaUser,
+            @Part("password") RequestBody password,
+            @Part("email") RequestBody email,
+            @Part("no_telp_user") RequestBody noTelp,
+            @Part("alamat_user") RequestBody alamatUser,
+            @Part MultipartBody.Part image
+    );
+
+    @GET("user/get_admin")
+    Call<UserResponse> getAdmin(
+            @Query("role_user") String roleUser
+    );
 }

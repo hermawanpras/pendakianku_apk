@@ -119,6 +119,7 @@
         android:fontFamily="@font/open_sans_semi_bold"
         android:textAllCaps="false"
         android:text="Edit Profile"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnTambahAdmin"
         android:layout_width="250dp"
@@ -130,6 +131,7 @@
         android:fontFamily="@font/open_sans_semi_bold"
         android:textAllCaps="false"
         android:text="Tambah Admin"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnTentangApp"
         android:layout_width="250dp"

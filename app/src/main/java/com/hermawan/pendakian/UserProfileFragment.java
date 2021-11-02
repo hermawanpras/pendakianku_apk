@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
@@ -27,7 +29,8 @@ import retrofit2.Response;
 public class UserProfileFragment extends Fragment {
 
     private TextView tvNama, tvAlamat, tvTelepon, tvEmail;
-    private MaterialButton btnKeluar;
+    private MaterialButton btnKeluar, btnEditProfile;
+    ImageView profileIv;
 
     private ApiInterface apiInterface;
 
@@ -41,14 +44,28 @@ public class UserProfileFragment extends Fragment {
         tvTelepon = view.findViewById(R.id.txtNomorHP);
         tvEmail = view.findViewById(R.id.txtViewEmail);
         btnKeluar = view.findViewById(R.id.btnKeluar);
+        btnEditProfile = view.findViewById(R.id.btnEditProfileUser);
+        profileIv = view.findViewById(R.id.profile_image);
 
         apiInterface = ApiClient.getClient();
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), EditProfilActivity.class));
+            }
+        });
 
         UserResponse.UserModel model = AppPreference.getUser(getContext());
         tvNama.setText(model.username);
         tvAlamat.setText(model.alamat);
         tvTelepon.setText(model.noTelp);
         tvEmail.setText(model.email);
+
+        Glide.with(getActivity())
+                .load(getString(R.string.base_url) + getString(R.string.link_profile) + model.fotoProfil)
+                .fitCenter()
+                .into(profileIv);
 
         btnKeluar.setOnClickListener(new View.OnClickListener() {
             @Override

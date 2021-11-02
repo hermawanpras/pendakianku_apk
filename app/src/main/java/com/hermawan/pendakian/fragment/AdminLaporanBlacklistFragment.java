@@ -58,10 +58,9 @@ public class AdminLaporanBlacklistFragment extends Fragment {
         rv  = view.findViewById(R.id.rv);
         apiInterface = ApiClient.getClient();
         tidakTv = view.findViewById(R.id.tidakTv);
-        tidakTv.setVisibility(View.INVISIBLE);
         tambahBlBtn = view.findViewById(R.id.tambahBlBtn);
 
-        tidakTv.setEnabled(false);
+        tidakTv.setVisibility(View.GONE);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 

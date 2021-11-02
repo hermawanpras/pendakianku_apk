@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                         if (response != null) {
+                            onBackPressed();
                             Toast.makeText(SignUpActivity.this, response.body().message, Toast.LENGTH_SHORT).show();
                         }
                     }
