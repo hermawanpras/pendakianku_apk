@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.hermawan.pendakian.R;
 import com.hermawan.pendakian.api.response.SOSResponse;
 
@@ -30,7 +31,11 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textViewStatus.setText(data.get(position).isSeen == 0 ? "Belum Dilihat" : "Dilihat");
+        holder.status.setText(data.get(position).isSeen == 0 ? "Belum Dilihat" : "Dilihat");
+
+        holder.namaUserTv.setText(data.get(position).nama);
+        holder.latLongTv.setText(data.get(position).latitude + " / " + data.get(position).longitude);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,10 +50,14 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewStatus;
+        private TextView namaUserTv, latLongTv;
+        Chip status;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewStatus = itemView.findViewById(R.id.textViewStatus);
+            namaUserTv = itemView.findViewById(R.id.namaUserTv);
+            status = itemView.findViewById(R.id.statusChip);
+            latLongTv = itemView.findViewById(R.id.latLongTv);
         }
     }
 

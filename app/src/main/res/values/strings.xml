@@ -2,11 +2,11 @@
     <string name="app_name">Pendakian Panderman dan Buthak</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
-    <string name="base_url">http://192.168.1.5/</string>
-    <string name="link_profile">rest_hermawan/assets/profile/</string>
-    <string name="link_identitas">rest_hermawan/assets/pendakian/identitas/</string>
-    <string name="link_surat">rest_hermawan/assets/pendakian/surat_kesehatan/</string>
-    <string name="link_pembayaran">rest_hermawan/assets/pembayaran/</string>
+    <string name="base_url">https://prascreative.my.id/</string>
+    <string name="link_profile">assets/profile/</string>
+    <string name="link_identitas">assets/pendakian/identitas/</string>
+    <string name="link_surat">assets/pendakian/surat_kesehatan/</string>
+    <string name="link_pembayaran">assets/pembayaran/</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoiaGVybWF3YW5wcmFzIiwiYSI6ImNrdW8wZWo4bDQ2bzkyb256c2Y1cmZmaDUifQ.yrYXPJIieyGIdYJ0t1Rqpw</string>
 

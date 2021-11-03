@@ -18,7 +18,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:src="@drawable/ic_hiking"/>
 
         <TextView
@@ -52,5 +51,30 @@
             android:layout_height="60dp"
             android:text="Sign In"/>
 
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Belum punya akun?"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daftar sekarang."
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btnDaftar"/>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

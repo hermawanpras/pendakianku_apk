@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
+    TextView btnDaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class SignInActivity extends AppCompatActivity {
         final EditText email = findViewById(R.id.email);
         final EditText password = findViewById(R.id.password);
         Button signIn = findViewById(R.id.signIn);
+        btnDaftar = findViewById(R.id.btnDaftar);
 
         if (AppPreference.getUser(this) != null) {
             if (AppPreference.getUser(this).roleUser.equals("admin")) {
@@ -44,8 +47,14 @@ public class SignInActivity extends AppCompatActivity {
             } else {
                 startActivity(new Intent(SignInActivity.this, UserMainMenuActivity.class));
             }
-
         }
+
+        btnDaftar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+            }
+        });
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override

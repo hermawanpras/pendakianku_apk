@@ -61,8 +61,6 @@ public class DataPendakiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_pendaki);
 
-
-
         apiInterface = ApiClient.getClient();
 
         namaEt = findViewById(R.id.namaLeaderEt);
