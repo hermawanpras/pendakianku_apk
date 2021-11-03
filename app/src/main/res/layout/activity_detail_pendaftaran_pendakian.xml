@@ -82,14 +82,21 @@
                 android:id="@+id/tanggalDakiTv"/>
 
             <TextView
-                android:layout_marginTop="20dp"
+                android:id="@+id/tanggalDaftarTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daki mulai sampai"
-                android:id="@+id/tanggalDaftarTv"/>
+                android:layout_marginTop="20dp"
+                android:text="Daki mulai sampai" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tampilkan QR code"
+                android:id="@+id/tampilQrBtn"
+                android:layout_marginTop="20dp"/>
 
             <View
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"

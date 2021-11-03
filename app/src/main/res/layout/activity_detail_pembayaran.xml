@@ -145,12 +145,13 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_marginTop="10dp"
+            <com.github.chrisbanes.photoview.PhotoView
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:id="@+id/fotoBuktiIv"
                 android:src="@drawable/ic_gambar"
-                android:id="@+id/buktiBayarIv"/>
+                android:adjustViewBounds="true"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -158,6 +159,14 @@
                 android:layout_height="60dp"
                 android:id="@+id/validasiBayarBtn"
                 android:text="Validasi Pembayaran" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="60dp"
+                android:id="@+id/tolakBayarBtn"
+                android:backgroundTint="@color/design_default_color_error"
+                android:text="Tolak Pembayaran" />
 
         </LinearLayout>
 

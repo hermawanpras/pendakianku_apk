@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.BaseResponse;
@@ -24,11 +25,12 @@ import retrofit2.Response;
 public class DetailPembayaranActivity extends AppCompatActivity {
 
     TextView tglTransferTv, namaRekTv, bankPengTv, statusTv, nominalTv;
-    ImageView buktiIv;
-    Button validasiBayarBtn;
+    Button validasiBayarBtn, tolakBayarBtn;
 
     ApiInterface apiInterface;
     String idPembayaran, idDaftar;
+
+    PhotoView fotoBuktiIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,13 @@ public class DetailPembayaranActivity extends AppCompatActivity {
         bankPengTv = findViewById(R.id.bankPengirimTv);
         statusTv = findViewById(R.id.statusTv);
         nominalTv = findViewById(R.id.nominalTv);
-        buktiIv = findViewById(R.id.buktiBayarIv);
         validasiBayarBtn = findViewById(R.id.validasiBayarBtn);
+        tolakBayarBtn = findViewById(R.id.tolakBayarBtn);
 
-        validasiBayarBtn.setVisibility(View.INVISIBLE);
+        fotoBuktiIv = findViewById(R.id.fotoBuktiIv);
+
+        validasiBayarBtn.setVisibility(View.GONE);
+        tolakBayarBtn.setVisibility(View.GONE);
 
         apiInterface = ApiClient.getClient();
 
@@ -72,6 +77,26 @@ public class DetailPembayaranActivity extends AppCompatActivity {
             }
         });
 
+        tolakBayarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apiInterface.tolakPembayaran(idPembayaran, idDaftar).enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.body().status) {
+                            onBackPressed();
+                            Toast.makeText(getApplicationContext(), "Pembayaran telah ditolak.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
     }
 
     void getData(String id) {
@@ -89,11 +114,12 @@ public class DetailPembayaranActivity extends AppCompatActivity {
 
                     Glide.with(getApplicationContext())
                             .load( getString(R.string.base_url) + getString(R.string.link_pembayaran) + pm.getBukti())
-                            .centerCrop()
-                            .into(buktiIv);
+                            .centerInside()
+                            .into(fotoBuktiIv);
 
                     if (pm.getStatus().equals("0") && AppPreference.getUser(DetailPembayaranActivity.this).roleUser.equals("admin")) {
                         validasiBayarBtn.setVisibility(View.VISIBLE);
+                        tolakBayarBtn.setVisibility(View.VISIBLE);
                     }
                 }
             }

@@ -12,8 +12,6 @@ import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 import com.hermawan.pendakian.api.response.PendakiResponse;
 import com.hermawan.pendakian.api.response.ReportResponse;
 import com.hermawan.pendakian.api.response.ReportUmurResponse;
-=======
->>>>>>> Stashed changes
 import com.hermawan.pendakian.api.response.SOSResponse;
 import com.hermawan.pendakian.api.response.TitikJalurResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
@@ -178,6 +176,12 @@ public interface ApiInterface {
             @Query("id_daftar") String idDaftar
     );
 
+    @GET("pembayaran/tolak_pembayaran")
+    Call<BaseResponse> tolakPembayaran(
+            @Query("id_pembayaran") String idPembayaran,
+            @Query("id_daftar") String idDaftar
+    );
+
     @GET("blacklist/search")
     Call<PendakiResponse> search(
             @Query("no_identitas") String noIdentitas
@@ -208,7 +212,6 @@ public interface ApiInterface {
             @Query("id_detail_jalur") String idDetailJalur
     );
 
-<<<<<<< Updated upstream
     @GET("report/get_report")
     Call<ReportResponse> getReport(
             @Query("bulan") String bulan
@@ -219,8 +222,6 @@ public interface ApiInterface {
             @Query("bulan") String bulan
     );
 
-=======
->>>>>>> Stashed changes
     @GET("SOS/getSos")
     Call<SOSResponse> getSOS();
 

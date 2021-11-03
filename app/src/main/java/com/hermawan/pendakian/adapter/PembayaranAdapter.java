@@ -70,6 +70,12 @@ public class PembayaranAdapter extends RecyclerView.Adapter<PembayaranAdapter.Vi
             holder.chip.setChipBackgroundColorResource(R.color.colorAccent);
         }
 
+        if (list.get(position).getIdInfoJalur().equals("1")) {
+            holder.namaGunungTv.setText("Gunung Panderman");
+        } else {
+            holder.namaGunungTv.setText("Gunung Buthak");
+        }
+
         Glide.with(context)
                 .load(context.getString(R.string.base_url) + context.getString(R.string.link_profile) + list.get(position).getFotoProfil())
                 .fitCenter()

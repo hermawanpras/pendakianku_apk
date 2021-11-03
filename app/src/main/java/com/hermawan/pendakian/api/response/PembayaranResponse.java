@@ -42,7 +42,10 @@ public class PembayaranResponse extends BaseResponse {
         @SerializedName("id_user")
         public String idUser;
 
-        public PembayaranModel(String namaUser, String fotoProfil, String idPembayaran, String idDaftar, String bukti, String tanggalBayar, String nominal, String namaRekening, String bankPengirim, String status, String idUser) {
+        @SerializedName("id_info_jalur")
+        public String idInfoJalur;
+
+        public PembayaranModel(String namaUser, String fotoProfil, String idPembayaran, String idDaftar, String bukti, String tanggalBayar, String nominal, String namaRekening, String bankPengirim, String status, String idUser, String idInfoJalur) {
             this.namaUser = namaUser;
             this.fotoProfil = fotoProfil;
             this.idPembayaran = idPembayaran;
@@ -54,6 +57,7 @@ public class PembayaranResponse extends BaseResponse {
             this.bankPengirim = bankPengirim;
             this.status = status;
             this.idUser = idUser;
+            this.idInfoJalur = idInfoJalur;
         }
 
         public String getNamaUser() {
@@ -142,6 +146,14 @@ public class PembayaranResponse extends BaseResponse {
 
         public void setIdUser(String idUser) {
             this.idUser = idUser;
+        }
+
+        public String getIdInfoJalur() {
+            return idInfoJalur;
+        }
+
+        public void setIdInfoJalur(String idInfoJalur) {
+            this.idInfoJalur = idInfoJalur;
         }
     }
 }

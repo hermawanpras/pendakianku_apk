@@ -4,14 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 import com.hermawan.pendakian.adapter.DetailJalurAdapter;
 import com.hermawan.pendakian.adapter.DetailPendakiAdapter;
@@ -32,11 +38,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
+import static java.security.AccessController.getContext;
+
 public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
     TextView namaUserTv, tanggalDakiTv, tanggalDaftarTv, namaGunungTv;
     Chip chip;
-    Button validasiDaftarBtn;
+    Button validasiDaftarBtn, tampilQrBtn;
     ApiInterface apiInterface;
     RecyclerView rv;
     UserResponse.UserModel user;
@@ -57,6 +66,9 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
         chip = findViewById(R.id.statusChip);
         validasiDaftarBtn = findViewById(R.id.validasiDaftarBtn);
         rv = findViewById(R.id.rv);
+        tampilQrBtn = findViewById(R.id.tampilQrBtn);
+
+        tampilQrBtn.setVisibility(View.VISIBLE);
 
         validasiDaftarBtn.setEnabled(false);
 
@@ -75,95 +87,112 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
     void setButton(String role, String status) {
         if (role.equals("admin")) {
-            if (status.equals("0")) {
-                validasiDaftarBtn.setText("VALIDASI PENDAFTARAN");
-                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        apiInterface.validasiPendaftaran(
-                                idDaftar,
-                                "1"
-                        ).enqueue(new Callback<BaseResponse>() {
-                            @Override
-                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                                if (response != null) {
-                                    if (response.body().status) {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran berhasil", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran gagal", Toast.LENGTH_LONG).show();
+            switch (status) {
+                case "0":
+                    validasiDaftarBtn.setText("VALIDASI PENDAFTARAN");
+                    validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            apiInterface.validasiPendaftaran(
+                                    idDaftar,
+                                    "1"
+                            ).enqueue(new Callback<BaseResponse>() {
+                                @Override
+                                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                    if (response != null) {
+                                        if (response.body().status) {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran berhasil", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Validasi pendaftaran gagal", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                                Log.e("login", t.getMessage());
-                            }
-                        });
-                    }
-                });
-            } else if (status.equals("2")) {
-                validasiDaftarBtn.setText("KONFIRMASI CEKIN");
-                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        apiInterface.validasiPendaftaran(
-                                idDaftar,
-                                "3"
-                        ).enqueue(new Callback<BaseResponse>() {
-                            @Override
-                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                                if (response != null) {
-                                    if (response.body().status) {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin berhasil", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin gagal", Toast.LENGTH_LONG).show();
+                                @Override
+                                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                    Log.e("login", t.getMessage());
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case "2":
+                    validasiDaftarBtn.setText("KONFIRMASI CEKIN");
+                    validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            apiInterface.validasiPendaftaran(
+                                    idDaftar,
+                                    "3"
+                            ).enqueue(new Callback<BaseResponse>() {
+                                @Override
+                                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                    if (response != null) {
+                                        if (response.body().status) {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin berhasil", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekin gagal", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                                Log.e("login", t.getMessage());
-                            }
-                        });
-                    }
-                });
-            } else if (status.equals("3")) {
-                validasiDaftarBtn.setText("KONFIRMASI CEKOUT");
-                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        apiInterface.validasiPendaftaran(
-                                idDaftar,
-                                "4"
-                        ).enqueue(new Callback<BaseResponse>() {
-                            @Override
-                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                                if (response != null) {
-                                    if (response.body().status) {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout berhasil", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout gagal", Toast.LENGTH_LONG).show();
+                                @Override
+                                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                    Log.e("login", t.getMessage());
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case "3":
+                    validasiDaftarBtn.setText("KONFIRMASI CEKOUT");
+                    validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            apiInterface.validasiPendaftaran(
+                                    idDaftar,
+                                    "4"
+                            ).enqueue(new Callback<BaseResponse>() {
+                                @Override
+                                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                    if (response != null) {
+                                        if (response.body().status) {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout berhasil", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(DetailPendaftaranPendakianActivity.this, "Cekout gagal", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                                Log.e("login", t.getMessage());
-                            }
-                        });
-                    }
-                });
-            } else if (status.equals("1")) {
-                validasiDaftarBtn.setText("MENUNGGU PEMBAYARAN");
-            } else if (status.equals("4")) {
-                validasiDaftarBtn.setText("SELESAI");
+                                @Override
+                                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                    Log.e("login", t.getMessage());
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case "1":
+                    validasiDaftarBtn.setText("MENUNGGU PEMBAYARAN");
+                    break;
+                case "4":
+                    validasiDaftarBtn.setText("SELESAI");
+                    break;
             }
-
         } else {
-            if (status.equals("2")) {
+            if (status.equals("1")) {
+                validasiDaftarBtn.setText("BAYAR");
+                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(DetailPendaftaranPendakianActivity.this, BayarActivity.class);
+                        i.putExtra("id_daftar", idDaftar);
+                        startActivity(i);
+                    }
+                });
+            } else if (status.equals("0")) {
+                validasiDaftarBtn.setText("MENUNGGU VALIDASI ADMIN");
+            } else {
                 validasiDaftarBtn.setText("DETAIL PEMBAYARAN");
                 validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -187,17 +216,8 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
                     }
                 });
-            } else {
-                validasiDaftarBtn.setText("BAYAR");
-                validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(DetailPendaftaranPendakianActivity.this, BayarActivity.class);
-                        i.putExtra("id_daftar", idDaftar);
-                        startActivity(i);
-                    }
-                });
             }
+
 
         }
 
@@ -240,6 +260,33 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
                     }
 
                     setButton(user.roleUser, pm.getStatusPendakian());
+
+                    if (pm.getStatusPendakian().equals("0") || pm.getStatusPendakian().equals("1")) {
+                        tampilQrBtn.setVisibility(View.GONE);
+                    } else {
+                        tampilQrBtn.setVisibility(View.VISIBLE);
+                    }
+
+                    tampilQrBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Create a custom dialog object
+                            final Dialog dialog = new Dialog(DetailPendaftaranPendakianActivity.this);
+                            // Include dialog.xml file
+                            dialog.setContentView(R.layout.dialog_qr_code);
+                            // Set dialog title
+                            dialog.setTitle("Custom Dialog");
+
+                            // set values for custom dialog components - text, image or button
+                            ImageView image = dialog.findViewById(R.id.dialog_imageview);
+                            Glide.with(DetailPendaftaranPendakianActivity.this)
+                                    .load( getString(R.string.base_url) + "assets/pendakian/qr_code/" + idDaftar + ".png")
+                                    .centerCrop()
+                                    .into(image);
+
+                            dialog.show();
+                        }
+                    });
                 }
             }
 

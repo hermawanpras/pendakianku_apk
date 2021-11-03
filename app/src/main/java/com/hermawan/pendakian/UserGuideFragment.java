@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
@@ -22,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import android.location.LocationListener;
+import android.widget.Toast;
+
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.BaseResponse;
@@ -42,6 +45,19 @@ public class UserGuideFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_guide, container, false);
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION)){
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }else{
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }
+        }
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
@@ -117,8 +133,8 @@ public class UserGuideFragment extends Fragment {
             }
         });
 
-        progressDialog.show();
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            progressDialog.show();
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     2000,
@@ -130,6 +146,7 @@ public class UserGuideFragment extends Fragment {
         sinyal_darurat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isLocationEnabled();
                 apiInterface.postSOS(
                         AppPreference.getUser(v.getContext()).idUser,
                         latitude,
@@ -187,6 +204,24 @@ public class UserGuideFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults){
+        switch (requestCode){
+            case 1: {
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 
     LocationListener locationListenerGPS = new LocationListener() {

@@ -22,7 +22,7 @@ public class AdminProfileActivity extends Fragment {
 
     CircleImageView fotoIv;
     TextView nama, email, noHp, alamat;
-    MaterialButton btnKeluar, btnTambahAdmin, btnEditProfile;
+    MaterialButton btnKeluar, btnTambahAdmin, btnEditProfile, btnTentangApp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,8 +37,16 @@ public class AdminProfileActivity extends Fragment {
         alamat = view.findViewById(R.id.txtViewAlamat);
         btnTambahAdmin = view.findViewById(R.id.btnTambahAdmin);
         btnEditProfile = view.findViewById(R.id.btnEditProfileUser);
+        btnTentangApp = view.findViewById(R.id.btnTentangApp);
 
         btnKeluar = view.findViewById(R.id.btnKeluar);
+
+        btnTentangApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TentangAplikasiActivity.class));
+            }
+        });
 
         btnTambahAdmin.setOnClickListener(new View.OnClickListener() {
             @Override

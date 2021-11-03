@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class UserProfileFragment extends Fragment {
 
     private TextView tvNama, tvAlamat, tvTelepon, tvEmail;
-    private MaterialButton btnKeluar, btnEditProfile;
+    private MaterialButton btnKeluar, btnEditProfile, btnTentangApp;
     ImageView profileIv;
 
     private ApiInterface apiInterface;
@@ -46,8 +46,16 @@ public class UserProfileFragment extends Fragment {
         btnKeluar = view.findViewById(R.id.btnKeluar);
         btnEditProfile = view.findViewById(R.id.btnEditProfileUser);
         profileIv = view.findViewById(R.id.profile_image);
+        btnTentangApp = view.findViewById(R.id.btnTentangApp);
 
         apiInterface = ApiClient.getClient();
+
+        btnTentangApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TentangAplikasiActivity.class));
+            }
+        });
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override

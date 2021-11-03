@@ -143,6 +143,7 @@
         android:fontFamily="@font/open_sans_semi_bold"
         android:textAllCaps="false"
         android:text="Tentang Aplikasi"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnKeluar"
         android:layout_width="250dp"

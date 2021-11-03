@@ -21,9 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ListAdminActivity"></activity>
+        <activity android:name=".TentangAplikasiActivity"></activity>
+        <activity android:name=".ListAdminActivity" />
         <activity android:name=".TambahAdminActivity" />
-        <activity android:name=".SOSActivity"></activity>
+        <activity android:name=".SOSActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".EditProfilActivity" />
         <activity android:name=".EditDetailJalurActivity" />
