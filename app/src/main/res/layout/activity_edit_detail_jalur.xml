@@ -147,11 +147,11 @@
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="30dp"
-            android:id="@+id/tambahBtn"
+            android:id="@+id/simpanBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="SIMPAN"/>
+            android:layout_marginTop="30dp"
+            android:text="SIMPAN" />
 
     </LinearLayout>
 

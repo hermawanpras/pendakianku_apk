@@ -271,6 +271,16 @@ public interface ApiInterface {
             @Query("id_pendaki") String idPendaki
     );
 
+    @GET("detail_jalur/update_detail")
+    Call<BaseResponse> updateDj(
+            @Query("id_detail_jalur") String idDetailJalur,
+            @Query("total_kuota") String totalKuota,
+            @Query("old_total_kuota") String oldTotalKuota,
+            @Query("kuota_sisa") String kuotaSisa,
+            @Query("status") String status,
+            @Query("keterangan") String keterangan
+    );
+    
     @Multipart
     @POST("pendaki/update_detail")
     Call<BaseResponse> updatePendaki(
