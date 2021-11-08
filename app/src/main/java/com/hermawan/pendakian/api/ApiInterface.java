@@ -265,4 +265,23 @@ public interface ApiInterface {
     Call<UserResponse> getAdmin(
             @Query("role_user") String roleUser
     );
+
+    @GET("pendaki/hapus_pendaki")
+    Call<BaseResponse> hapusPendaki(
+            @Query("id_pendaki") String idPendaki
+    );
+
+    @Multipart
+    @POST("pendaki/update_detail")
+    Call<BaseResponse> updatePendaki(
+            @Part("no_identitas") RequestBody noIdentitas,
+            @Part("id_pendaki") RequestBody idPendaki,
+            @Part("nama_pendaki") RequestBody namaPendaki,
+            @Part("tgl_lahir") RequestBody tglLahir,
+            @Part("jk_pendaki") RequestBody jkPendaki,
+            @Part("alamat_pendaki") RequestBody alamatPendaki,
+            @Part("no_telp") RequestBody noTelp,
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part image1
+    );
 }

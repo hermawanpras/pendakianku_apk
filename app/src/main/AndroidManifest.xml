@@ -21,7 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TentangAplikasiActivity"></activity>
+        <activity android:name=".UpdateDetailAnggotaActivity"></activity>
+        <activity android:name=".TambahUpdateAnggotaActivity" />
+        <activity android:name=".UpdateAnggotaActivity" />
+        <activity android:name=".TentangAplikasiActivity" />
         <activity android:name=".ListAdminActivity" />
         <activity android:name=".TambahAdminActivity" />
         <activity android:name=".SOSActivity" />

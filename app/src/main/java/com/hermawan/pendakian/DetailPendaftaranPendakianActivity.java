@@ -43,7 +43,7 @@ import static java.security.AccessController.getContext;
 
 public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
-    TextView namaUserTv, tanggalDakiTv, tanggalDaftarTv, namaGunungTv;
+    TextView namaUserTv, tanggalDakiTv, tanggalDaftarTv, namaGunungTv, btnUpdateAnggota;
     Chip chip;
     Button validasiDaftarBtn, tampilQrBtn;
     ApiInterface apiInterface;
@@ -67,8 +67,10 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
         validasiDaftarBtn = findViewById(R.id.validasiDaftarBtn);
         rv = findViewById(R.id.rv);
         tampilQrBtn = findViewById(R.id.tampilQrBtn);
+        btnUpdateAnggota = findViewById(R.id.btnUpdate);
 
         tampilQrBtn.setVisibility(View.VISIBLE);
+        btnUpdateAnggota.setVisibility(View.GONE);
 
         validasiDaftarBtn.setEnabled(false);
 
@@ -83,6 +85,17 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
         getData(idDaftar, idInfoJalur);
 
         getDetailPendaki(idDaftar);
+
+        btnUpdateAnggota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DetailPendaftaranPendakianActivity.this, UpdateAnggotaActivity.class);
+                i.putExtra("id_daftar", idDaftar);
+                i.putExtra("id_info_jalur", idInfoJalur);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     void setButton(String role, String status) {
@@ -217,8 +230,6 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
                     }
                 });
             }
-
-
         }
 
     }
@@ -266,6 +277,13 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
                     } else {
                         tampilQrBtn.setVisibility(View.VISIBLE);
                     }
+
+                    if ((pm.getStatusPendakian().equals("0") || pm.getStatusPendakian().equals("1")) && user.roleUser.equals("user")) {
+                        btnUpdateAnggota.setVisibility(View.VISIBLE);
+                    } else {
+                        btnUpdateAnggota.setVisibility(View.GONE);
+                    }
+
 
                     tampilQrBtn.setOnClickListener(new View.OnClickListener() {
                         @Override

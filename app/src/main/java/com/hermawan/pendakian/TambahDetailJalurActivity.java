@@ -35,7 +35,7 @@ import retrofit2.Response;
 
 public class TambahDetailJalurActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-   String[] gunung = {"Buthak", "Panderman"};
+   String[] gunung = {"Panderman", "Buthak"};
    Button tambahBtn;
    EditText ketEt, kuotaEt, tglJalur;
    ImageView btnJalur;
