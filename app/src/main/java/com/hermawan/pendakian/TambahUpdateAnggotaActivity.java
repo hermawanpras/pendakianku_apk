@@ -162,7 +162,7 @@ public class TambahUpdateAnggotaActivity extends AppCompatActivity {
                         );
                     }
                 });
-                builder.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("BATAL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(TambahUpdateAnggotaActivity.this, "Dibatalkan", Toast.LENGTH_SHORT).show();

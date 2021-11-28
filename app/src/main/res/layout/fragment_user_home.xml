@@ -10,7 +10,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,6 +20,16 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BOOKING PENDAKIAN"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_marginBottom="6dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -221,7 +232,6 @@
 
             </LinearLayout>
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/view_page"
                 android:layout_width="wrap_content"
@@ -254,15 +264,15 @@
                         <ImageView
                             android:id="@+id/img_weather"
                             android:src="@drawable/ic_android_black_24dp"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"/>
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"/>
                         <TextView
                             android:id="@+id/txt_temperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:textColor="@color/black"
-                            android:textSize="50sp"
+                            android:textSize="30sp"
                             android:fontFamily="@font/open_sans_semi_bold"
                             android:text="24°C"/>
                     </LinearLayout>
@@ -296,14 +306,17 @@
                                 android:background="@drawable/cell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Wind"/>
+                                android:paddingRight="6dp"
+                                android:text="Wind"
+                                android:textSize="10sp"/>
                             <TextView
                                 android:id="@+id/txt_wind"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_column="1"
-                                android:text="Speed: 1 Deg: 1"/>
+                                android:text="Speed: 1 Deg: 1"
+                                android:textSize="10sp"/>
                         </TableRow>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -312,14 +325,17 @@
                                 android:background="@drawable/cell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Pressure"/>
+                                android:paddingRight="6dp"
+                                android:text="Pressure"
+                                android:textSize="10sp"/>
                             <TextView
                                 android:id="@+id/txt_pressure"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_column="1"
-                                android:text="1013.75 hps"/>
+                                android:text="1013.75 hps"
+                                android:textSize="10sp"/>
                         </TableRow>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -328,14 +344,17 @@
                                 android:background="@drawable/cell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Humidity"/>
+                                android:paddingRight="6dp"
+                                android:text="Humidity"
+                                android:textSize="10sp"/>
                             <TextView
                                 android:id="@+id/txt_humidity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_column="1"
-                                android:text="100%"/>
+                                android:text="100%"
+                                android:textSize="10sp"/>
                         </TableRow>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -344,14 +363,17 @@
                                 android:background="@drawable/cell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sunrise"/>
+                                android:paddingRight="6dp"
+                                android:text="Sunrise"
+                                android:textSize="10sp"/>
                             <TextView
                                 android:id="@+id/txt_sunrise"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_column="1"
-                                android:text="11:00"/>
+                                android:text="11:00"
+                                android:textSize="10sp"/>
                         </TableRow>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -360,14 +382,17 @@
                                 android:background="@drawable/cell"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sunset"/>
+                                android:paddingRight="6dp"
+                                android:text="Sunset"
+                                android:textSize="10sp"/>
                             <TextView
                                 android:id="@+id/txt_sunset"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_column="1"
-                                android:text="17:00"/>
+                                android:text="17:00"
+                                android:textSize="10sp"/>
                         </TableRow>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -417,7 +442,6 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_forecast"
                 android:layout_below="@+id/main_info"
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

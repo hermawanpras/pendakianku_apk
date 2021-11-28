@@ -23,8 +23,17 @@
                 android:text="Informasi Keselamatan Pendakian"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:fontFamily="@font/open_sans_bold"/>
         </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_marginTop="8dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,6 +46,7 @@
                 android:text="Tips Mendirikan Tenda di Gunung"
                 android:fontFamily="@font/open_sans_semi_bold"
                 android:textColor="@color/black"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/black"
+                android:justificationMode="inter_word"
                 android:text="Banyak pendaki yang mendirikan tenda tanpa memperhatikan hal-hal yang penting, sehingga dapat menyebabkan kurang nyaman ketika tenda ditempati. Berikut tips mendirikan tenda di gunung : \n
 1. Carilah tanah lapang yang cukup luas untuk mendirikan tenda. Sesuaikan tanah lapang dengan ukuran tenda yang dibawa. \n
 2. Dirikan tenda yang agak jauh dari jalur pendakian. Dan jangan dirikan tenda hingga menutupi jalur pendakian, karena dapat mengganggu pendaki yang lewat. \n
@@ -58,6 +69,13 @@
 6. Dirikan tenda sesuai prosedur, mulai dari memasang frame tenda, inner tenda, pasak, rain cover, hingga flysheet. \n
 7. Buatlah parit di sekeliling tenda agar air hujan tidak masuk kedalam tenda."/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_marginTop="8dp"/>
+
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,18 +88,19 @@
             android:text="Tips Mengatasi Hipotermia"
             android:fontFamily="@font/open_sans_semi_bold"
             android:textColor="@color/black"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/hipotermia"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/hipo"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/black"
+            android:justificationMode="inter_word"
             android:text="Hipotermia merupakan suatu kondisi dimana sistem dalam tubuh untuk pengaturan suhu badan kesulitan mengatasi tekanan suhu dingin. Kondisi ini kerang menyerang para pendaki yang tidak membawa perlengkapan lengkap, terkena guyuran hujan, kurang mengkonsumsi kalori atau lainnya. Berikut gejala dan indikasi seseorang terkena hipotermia : \n
 1. Hipotermia biasanya diawali dengan berupa kedinginan biasa, badan yang menggigil, gemetar menahan dingin, kadang hingga gigi saling beradu ketika tidak kuat menahan dingin. \n
 2. Tubuh yang basah baik karena terkena hujan atau sisa keringat yang menempel pada baju, maka serangan hipotermia akan semakin cepat. \n
@@ -94,6 +113,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/black"
+                android:justificationMode="inter_word"
                 android:text="Cara Mengatasi hipotermia : \n
 1. Bawa masuk ke dalam tenda. Tujuannya untuk menjaga dari angin yang berhembus. \n
 2. Ganti baju basah dengan pakaian kering. Bantulah korban dengan mengganti baju. Itulah alasan dalam pendakian rombongan, minimal Anda yang perempuan wajib memiliki teman perempuan yang ikut dalam rombongan. \n
@@ -102,6 +122,13 @@
 5. Hangatkan badan korban. Cara ini bisa dilakukan dengan mengenakan beragam penghangat tubuh, seperti penutup kepala, jaket, kaos kaki, celana hangat, sleeping bag, dan matras aluminium foil. \n
 6. Jika memungkinkan, buatlah api diluar tenda, dan arahkan panas apinya ke dalam tenda. \n" />
     </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_marginTop="8dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,6 +153,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/black"
+                android:justificationMode="inter_word"
                 android:text="Jika Anda tersesat ketika mendaki gunung, lakukan hal dibawah ini : \n
 1. Persiapan Matang \n
 Ketahui medan pendakian dan cuaca di sekitar gunung. Mengenali teman perjalanan termasuk riwayat penyakit, pola komunikasi juga tak kalah penting. Usahakan mendaki dengan sistem jalan leader, middle, sweeper agar tidak terpisah dari rombongan. \n
