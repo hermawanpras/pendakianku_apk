@@ -45,7 +45,7 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
 
     TextView namaUserTv, tanggalDakiTv, tanggalDaftarTv, namaGunungTv, btnUpdateAnggota;
     Chip chip;
-    Button validasiDaftarBtn, tampilQrBtn;
+    Button validasiDaftarBtn, tampilQrBtn, batalDaftarBtn;
     ApiInterface apiInterface;
     RecyclerView rv;
     UserResponse.UserModel user;
@@ -68,9 +68,11 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
         rv = findViewById(R.id.rv);
         tampilQrBtn = findViewById(R.id.tampilQrBtn);
         btnUpdateAnggota = findViewById(R.id.btnUpdate);
+        batalDaftarBtn = findViewById(R.id.batalDaftarBtn);
 
         tampilQrBtn.setVisibility(View.VISIBLE);
         btnUpdateAnggota.setVisibility(View.GONE);
+        batalDaftarBtn.setVisibility(View.GONE);
 
         validasiDaftarBtn.setEnabled(false);
 

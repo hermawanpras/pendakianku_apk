@@ -126,6 +126,14 @@
                 android:id="@+id/validasiDaftarBtn"
                 android:text="Validasi pendaftaran" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/design_default_color_error"
+                android:layout_height="60dp"
+                android:id="@+id/batalDaftarBtn"
+                android:text="Batalkan pendaftaran" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
