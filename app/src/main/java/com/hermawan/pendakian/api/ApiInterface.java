@@ -266,6 +266,11 @@ public interface ApiInterface {
             @Query("role_user") String roleUser
     );
 
+    @GET("pendaftaran_pendakian/hapus")
+    Call<BaseResponse> hapusDaftar(
+            @Query("id_daftar") String idDaftar
+    );
+
     @GET("pendaki/hapus_pendaki")
     Call<BaseResponse> hapusPendaki(
             @Query("id_pendaki") String idPendaki

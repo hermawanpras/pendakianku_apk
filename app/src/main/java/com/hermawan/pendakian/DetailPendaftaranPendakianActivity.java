@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -196,6 +197,31 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
             }
         } else {
             if (status.equals("1")) {
+                batalDaftarBtn.setVisibility(View.VISIBLE);
+                batalDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DetailPendaftaranPendakianActivity.this);
+                        builder.setTitle("Hapus Pendaftaran Pendakian");
+                        builder.setMessage("Aksi ini tidak bisa diulangi. Apa Anda yakin ingin melanjutkan?");
+                        builder.setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                hapusDaftar(idDaftar);
+                            }
+                        });
+                        builder.setNeutralButton("BATAL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(DetailPendaftaranPendakianActivity.this, "Dibatalkan", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        AlertDialog ad = builder.create();
+                        ad.show();
+                    }
+                });
+
                 validasiDaftarBtn.setText("BAYAR");
                 validasiDaftarBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,6 +232,31 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
                     }
                 });
             } else if (status.equals("0")) {
+                batalDaftarBtn.setVisibility(View.VISIBLE);
+                batalDaftarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DetailPendaftaranPendakianActivity.this);
+                        builder.setTitle("Hapus Pendaftaran Pendakian");
+                        builder.setMessage("Aksi ini tidak bisa diulangi. Apa Anda yakin ingin melanjutkan?");
+                        builder.setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                hapusDaftar(idDaftar);
+                            }
+                        });
+                        builder.setNeutralButton("BATAL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(DetailPendaftaranPendakianActivity.this, "Dibatalkan", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        AlertDialog ad = builder.create();
+                        ad.show();
+                    }
+                });
+
                 validasiDaftarBtn.setText("MENUNGGU VALIDASI ADMIN");
             } else {
                 validasiDaftarBtn.setText("DETAIL PEMBAYARAN");
@@ -234,6 +285,28 @@ public class DetailPendaftaranPendakianActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void hapusDaftar(String id) {
+        apiInterface.hapusDaftar(id).enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response != null) {
+                    if (response.body().status) {
+                       onBackPressed();
+                        finish();
+                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Pendaftaran Pendakian berhasil dihapus.", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(DetailPendaftaranPendakianActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.e("daftar", t.getMessage());
+            }
+        });
     }
 
     private void getData(String a, String b) {
