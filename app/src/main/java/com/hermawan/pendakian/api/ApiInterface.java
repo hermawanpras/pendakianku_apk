@@ -222,6 +222,11 @@ public interface ApiInterface {
             @Query("bulan") String bulan
     );
 
+    @GET("blacklist/cek")
+    Call<BlacklistResponse> cekBlacklist(
+            @Query("no_identitas") String noIdentitas
+    );
+
     @GET("SOS/getSos")
     Call<SOSResponse> getSOS();
 

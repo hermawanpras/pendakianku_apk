@@ -219,6 +219,8 @@ public class UserHomeFragment extends Fragment {
         return view;
     }
 
+    public void cek(){}
+
     @Override
     public void onStop() {
         compositeDisposable.clear();
