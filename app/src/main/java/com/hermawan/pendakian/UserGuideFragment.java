@@ -146,60 +146,76 @@ public class UserGuideFragment extends Fragment {
         sinyal_darurat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isLocationEnabled();
-                apiInterface.postSOS(
-                        AppPreference.getUser(v.getContext()).idUser,
-                        latitude,
-                        longitude
-                ).enqueue(new Callback<BaseResponse>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body().status) {
-                                new AlertDialog.Builder(v.getContext())
-                                        .setTitle("Pesan")
-                                        .setMessage("Pesan SOS telah terkirim, mohon menungggu bantuan petugas")
-                                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                dialogInterface.dismiss();
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("PERHATIAN")
+                        .setMessage("Anda akan mengirim sinyal SOS ke petugas. Apakah Anda yakin?")
+                        .setPositiveButton("YAKIN", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                isLocationEnabled();
+                                apiInterface.postSOS(
+                                        AppPreference.getUser(v.getContext()).idUser,
+                                        latitude,
+                                        longitude
+                                ).enqueue(new Callback<BaseResponse>() {
+                                    @Override
+                                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body().status) {
+                                                new AlertDialog.Builder(v.getContext())
+                                                        .setTitle("Pesan")
+                                                        .setMessage("Pesan SOS telah terkirim, mohon menungggu bantuan petugas")
+                                                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                dialogInterface.dismiss();
+                                                            }
+                                                        })
+                                                        .create()
+                                                        .show();
+                                            } else {
+                                                new AlertDialog.Builder(v.getContext())
+                                                        .setTitle("Pesan")
+                                                        .setMessage("Pesan SOS gagal terkirim, silahkan coba lagi")
+                                                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                dialogInterface.dismiss();
+                                                            }
+                                                        })
+                                                        .create()
+                                                        .show();
                                             }
-                                        })
-                                        .create()
-                                        .show();
-                            } else {
-                                new AlertDialog.Builder(v.getContext())
-                                        .setTitle("Pesan")
-                                        .setMessage("Pesan SOS gagal terkirim, silahkan coba lagi")
-                                        .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                dialogInterface.dismiss();
-                                            }
-                                        })
-                                        .create()
-                                        .show();
-                            }
-                        } else {
-                            new AlertDialog.Builder(v.getContext())
-                                    .setTitle("Pesan")
-                                    .setMessage("Pesan SOS gagal terkirim, silahkan coba lagi")
-                                    .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            dialogInterface.dismiss();
+                                        } else {
+                                            new AlertDialog.Builder(v.getContext())
+                                                    .setTitle("Pesan")
+                                                    .setMessage("Pesan SOS gagal terkirim, silahkan coba lagi")
+                                                    .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            dialogInterface.dismiss();
+                                                        }
+                                                    })
+                                                    .create()
+                                                    .show();
                                         }
-                                    })
-                                    .create()
-                                    .show();
-                        }
-                    }
+                                    }
 
-                    @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
-                        Log.e("postSOS", t.getMessage());
-                    }
-                });
+                                    @Override
+                                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                        Log.e("postSOS", t.getMessage());
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
 

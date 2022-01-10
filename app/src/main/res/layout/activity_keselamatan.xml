@@ -1,172 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".KeselamatanActivity">
+    tools:context=".KeselamatanActivity"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <WebView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Informasi Keselamatan Pendakian"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:fontFamily="@font/open_sans_bold"/>
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tips Mendirikan Tenda di Gunung"
-                android:fontFamily="@font/open_sans_semi_bold"
-                android:textColor="@color/black"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/tips_tenda"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_regular"
-                android:textColor="@color/black"
-                android:justificationMode="inter_word"
-                android:text="Banyak pendaki yang mendirikan tenda tanpa memperhatikan hal-hal yang penting, sehingga dapat menyebabkan kurang nyaman ketika tenda ditempati. Berikut tips mendirikan tenda di gunung : \n
-1. Carilah tanah lapang yang cukup luas untuk mendirikan tenda. Sesuaikan tanah lapang dengan ukuran tenda yang dibawa. \n
-2. Dirikan tenda yang agak jauh dari jalur pendakian. Dan jangan dirikan tenda hingga menutupi jalur pendakian, karena dapat mengganggu pendaki yang lewat. \n
-3. Pilih lokasi yang dapat melindungi tenda dari angin dan badai. Carilah lokasi yang terdapat semak-semak tinggi atau pohon untuk menghalagi tenda terkena badai. \n
-4. Posisikan pintu tenda membelakangi arah angin sehingga angin tidak dapat masuk kedalam tenda. Dengan begitu, didalam tenda akan tetap hangat. \n
-5. Jangan dirikan tenda di area terlarang, seperti di petilasan sabana Gunung Buthak, di tepi tebing, Shelter, dan bibir jurang. \n
-6. Dirikan tenda sesuai prosedur, mulai dari memasang frame tenda, inner tenda, pasak, rain cover, hingga flysheet. \n
-7. Buatlah parit di sekeliling tenda agar air hujan tidak masuk kedalam tenda."/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Tips Mengatasi Hipotermia"
-            android:fontFamily="@font/open_sans_semi_bold"
-            android:textColor="@color/black"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/hipo"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_regular"
-            android:textColor="@color/black"
-            android:justificationMode="inter_word"
-            android:text="Hipotermia merupakan suatu kondisi dimana sistem dalam tubuh untuk pengaturan suhu badan kesulitan mengatasi tekanan suhu dingin. Kondisi ini kerang menyerang para pendaki yang tidak membawa perlengkapan lengkap, terkena guyuran hujan, kurang mengkonsumsi kalori atau lainnya. Berikut gejala dan indikasi seseorang terkena hipotermia : \n
-1. Hipotermia biasanya diawali dengan berupa kedinginan biasa, badan yang menggigil, gemetar menahan dingin, kadang hingga gigi saling beradu ketika tidak kuat menahan dingin. \n
-2. Tubuh yang basah baik karena terkena hujan atau sisa keringat yang menempel pada baju, maka serangan hipotermia akan semakin cepat. \n
-3. Bila ada angin yang bertiup kencang, pendaki biasanya akan cepat kehilangan panas tubuhnya. Jadi potensi terkena hipotermia akan meningkat ketika pendaki juga mengenakan pakaian basah. \n
-4. Hipotermia menyerang saraf dan bergerak dengan pelan, oleh karena itu sang korban tidak merasa kalau dia menjadi korban hipotermia. \n
-5. Hipotermia bisa menyebabkan korban pingsan hingga berhalusinasi. Halusinasi bisa menyebabkan banyak hal-hal berbahaya yang menyebabkan keselamatan pendaki tersebut." />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/open_sans_regular"
-                android:textColor="@color/black"
-                android:justificationMode="inter_word"
-                android:text="Cara Mengatasi hipotermia : \n
-1. Bawa masuk ke dalam tenda. Tujuannya untuk menjaga dari angin yang berhembus. \n
-2. Ganti baju basah dengan pakaian kering. Bantulah korban dengan mengganti baju. Itulah alasan dalam pendakian rombongan, minimal Anda yang perempuan wajib memiliki teman perempuan yang ikut dalam rombongan. \n
-3. Berilah minuman hangat. Minuman yang membantu tubuh lebih hangat, seperti miuman jahe. \n
-4. Beri makanan berkalori tinggi. Untuk kondisi darurat, pastikan Anda membawa makanan ringan manis yang cepat mengenyangkan, seperti coklat atau makanan yang berkalori tinggi lainnya. \n
-5. Hangatkan badan korban. Cara ini bisa dilakukan dengan mengenakan beragam penghangat tubuh, seperti penutup kepala, jaket, kaos kaki, celana hangat, sleeping bag, dan matras aluminium foil. \n
-6. Jika memungkinkan, buatlah api diluar tenda, dan arahkan panas apinya ke dalam tenda. \n" />
-    </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tips jika tersesat ketika mendaki gunung"
-                android:fontFamily="@font/open_sans_semi_bold"
-                android:textColor="@color/black"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/jalan"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_regular"
-                android:textColor="@color/black"
-                android:justificationMode="inter_word"
-                android:text="Jika Anda tersesat ketika mendaki gunung, lakukan hal dibawah ini : \n
-1. Persiapan Matang \n
-Ketahui medan pendakian dan cuaca di sekitar gunung. Mengenali teman perjalanan termasuk riwayat penyakit, pola komunikasi juga tak kalah penting. Usahakan mendaki dengan sistem jalan leader, middle, sweeper agar tidak terpisah dari rombongan. \n
-2. Jangan Panik Jika Tersesat \n
-Jika tersesat di jalur pendakian, maka jangan panik dan tetap berkepala dingin. Jika membabi buta mencari arah atau jalan keluar, dapat semakin tersesat di alam. \n
-3. Kembali Ke Titik Awal atau Ke Puncak \n
-Pilihan kembali ke titik awal atau langsung ke puncak gunung dapat menjadi alternatif ketika tersesat. Dengan begitu, memungkinkan untuk bertemu orang lain dan memudahkan Tim SAR untuk menemukan kita. \n
-4. Jika Malam Sudah Tiba \n
-Jika hari mulai gelap dan masih tersesat, carilah ruang terbuka untuk beristirahat karena tempat terbuka dan datar lebih aman untuk menginap. Jika bisa susun batu atau kayu berbentuk nama atau SOS agar bisa ditemukan dari udara. \n
-5. Perhatikan Tanda-Tanda Alam \n
-Perhatikan pepohonan yang ditumbuhi lumut, maka bagian tersebut menghadap ke timur. Jika malam hari, lihat bintang paling terang, maka itu adalah arah utara. \n
-Selain itu, pendaki dapat menggunakan fitur Tracking Pendakian untuk mengetahui jalur pendakian, dan fitur Kompas untuk mengetahui arah mata angin.
-Pendaki juga dapat menggunakan fitur SOS (Sinyal Darurat) ketika membutuhkan pertolongan dari Pos Pendakian."/>
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
