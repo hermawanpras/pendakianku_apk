@@ -4,8 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.BaseResponse;
+import com.hermawan.pendakian.api.response.BlacklistResponse;
 import com.hermawan.pendakian.api.response.PendaftaranPendakianResponse;
 import com.hermawan.pendakian.api.response.UserResponse;
 import com.hermawan.pendakian.preference.AppPreference;
@@ -148,7 +151,6 @@ public class DataPendakiActivity extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.setTitle("Pesan");
                 progressDialog.setMessage("Mohon tunggu sebentar...");
-                progressDialog.show();
 
                 UserResponse.UserModel u = AppPreference.getUser(getApplicationContext());
 
@@ -202,38 +204,67 @@ public class DataPendakiActivity extends AppCompatActivity {
         RequestBody reqFile1 =  RequestBody.create(MediaType.parse("image/*"), file1);
         MultipartBody.Part f1 =  MultipartBody.Part.createFormData("image1", file1.getName(), reqFile1);
 
-        apiInterface.simpanPendaki(
-                noIdentitas,
-                idDaftar,
-                namaPendaki,
-                tglLahir,
-                jkPendaki,
-                alamat,
-                noTelp,
-                statusPendaki,
-                f,
-                f1
-        ).enqueue(new Callback<BaseResponse>() {
+        apiInterface.cekBlacklist(
+                noId
+        ).enqueue(new Callback<BlacklistResponse>() {
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response != null) {
-                    if (response.body().status) {
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        Intent i = new Intent(DataPendakiActivity.this, TambahAnggotaActivity.class);
-                        i.putExtra("id_daftar", id);
-                        startActivity(i);
-                        finish();
+            public void onResponse(Call<BlacklistResponse> call, Response<BlacklistResponse> response) {
+                if (response.isSuccessful()) {
+                    if (!response.body().status) {
+                        progressDialog.show();
+                        apiInterface.simpanPendaki(
+                                noIdentitas,
+                                idDaftar,
+                                namaPendaki,
+                                tglLahir,
+                                jkPendaki,
+                                alamat,
+                                noTelp,
+                                statusPendaki,
+                                f,
+                                f1
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response != null) {
+                                    if (response.body().status) {
+                                        if (progressDialog.isShowing()) {
+                                            progressDialog.dismiss();
+                                        }
+                                        Intent i = new Intent(DataPendakiActivity.this, TambahAnggotaActivity.class);
+                                        i.putExtra("id_daftar", id);
+                                        startActivity(i);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(DataPendakiActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("daftar", t.getMessage());
+                            }
+                        });
                     } else {
-                        Toast.makeText(DataPendakiActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();
+                        new AlertDialog.Builder(DataPendakiActivity.this)
+                                .setTitle("Pesan")
+                                .setMessage("Anggota tidak dapat melakukan pendakian karena masuk daftar blacklist")
+                                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .create()
+                                .show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                Log.e("daftar", t.getMessage());
+            public void onFailure(Call<BlacklistResponse> call, Throwable t) {
+                Log.e("cekBlacklist", t.getMessage());
             }
         });
     }

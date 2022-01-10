@@ -33,6 +33,7 @@ import com.google.android.material.button.MaterialButton;
 import com.hermawan.pendakian.api.ApiClient;
 import com.hermawan.pendakian.api.ApiInterface;
 import com.hermawan.pendakian.api.response.BaseResponse;
+import com.hermawan.pendakian.api.response.BlacklistResponse;
 import com.hermawan.pendakian.api.response.PendakiResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -107,7 +108,6 @@ public class UpdateDetailAnggotaActivity extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.setTitle("Pesan");
                         progressDialog.setMessage("Mohon tunggu sebentar...");
-                        progressDialog.show();
 
                         hapus(idPendaki);
                     }
@@ -210,7 +210,7 @@ public class UpdateDetailAnggotaActivity extends AppCompatActivity {
                         );
                     }
                 });
-                builder.setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("BATAL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(UpdateDetailAnggotaActivity.this, "Dibatalkan", Toast.LENGTH_SHORT).show();
@@ -312,40 +312,70 @@ public class UpdateDetailAnggotaActivity extends AppCompatActivity {
         RequestBody reqFile1 =  RequestBody.create(MediaType.parse("image/*"), file1);
         MultipartBody.Part f1 =  MultipartBody.Part.createFormData("image1", file1.getName(), reqFile1);
 
-        apiInterface.updatePendaki(
-                noIdentitas,
-                idDaki,
-                namaPendaki,
-                tglLahir,
-                jkPendaki,
-                alamat,
-                noTelp,
-                f,
-                f1
-        ).enqueue(new Callback<BaseResponse>() {
+        apiInterface.cekBlacklist(
+                noId
+        ).enqueue(new Callback<BlacklistResponse>() {
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response != null) {
-                    if (response.body().status) {
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
+            public void onResponse(Call<BlacklistResponse> call, Response<BlacklistResponse> response) {
+                if (response.isSuccessful()) {
+                    if (!response.body().status) {
 
-                        Intent i = new Intent(UpdateDetailAnggotaActivity.this, UpdateAnggotaActivity.class);
-                        i.putExtra("id_daftar", idDaftar);
-                        i.putExtra("id_info_jalur", idInfoJalur);
-                        startActivity(i);
-                        finish();
-                        Toast.makeText(UpdateDetailAnggotaActivity.this, "Data anggota berhasil diupdate.", Toast.LENGTH_LONG).show();
+                        progressDialog.show();
+                        apiInterface.updatePendaki(
+                                noIdentitas,
+                                idDaki,
+                                namaPendaki,
+                                tglLahir,
+                                jkPendaki,
+                                alamat,
+                                noTelp,
+                                f,
+                                f1
+                        ).enqueue(new Callback<BaseResponse>() {
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response != null) {
+                                    if (response.body().status) {
+                                        if (progressDialog.isShowing()) {
+                                            progressDialog.dismiss();
+                                        }
+
+                                        Intent i = new Intent(UpdateDetailAnggotaActivity.this, UpdateAnggotaActivity.class);
+                                        i.putExtra("id_daftar", idDaftar);
+                                        i.putExtra("id_info_jalur", idInfoJalur);
+                                        startActivity(i);
+                                        finish();
+                                        Toast.makeText(UpdateDetailAnggotaActivity.this, "Data anggota berhasil diupdate.", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(UpdateDetailAnggotaActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                                Log.e("daftar", t.getMessage());
+                            }
+                        });
                     } else {
-                        Toast.makeText(UpdateDetailAnggotaActivity.this, "Terjadi kesalahan.", Toast.LENGTH_LONG).show();
+                        new AlertDialog.Builder(UpdateDetailAnggotaActivity.this)
+                                .setTitle("Pesan")
+                                .setMessage("Anggota tidak dapat melakukan pendakian karena masuk daftar blacklist")
+                                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .create()
+                                .show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                Log.e("daftar", t.getMessage());
+            public void onFailure(Call<BlacklistResponse> call, Throwable t) {
+                Log.e("cekBlacklist", t.getMessage());
             }
         });
     }

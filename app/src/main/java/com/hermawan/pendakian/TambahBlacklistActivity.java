@@ -177,7 +177,7 @@ public class TambahBlacklistActivity extends AppCompatActivity {
                     if (response.body().status) {
                         PendakiResponse.PendakiModel p = response.body().data.get(0);
 
-                        idPendaki = p.getIdPendaki();
+                        idPendaki = p.getNoIdentitas();
                         Log.e(TAG, "onResponse: " + p.getNamaPendaki() );
 
                         tidakTv.setVisibility(View.GONE);
